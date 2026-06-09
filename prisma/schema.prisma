@@ -1,0 +1,15 @@
+// Prisma schema.
+//
+// Phase 0: only the generator + datasource are defined so the toolchain is
+// wired. The full data model (User, Restaurant, MenuItem, Order, OrderItem,
+// Review + enums) is added in Phase 1 — see FOOD_DELIVERY_ROADMAP.md §2 — and
+// committed via `prisma migrate dev`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

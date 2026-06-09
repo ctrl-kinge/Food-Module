@@ -1,101 +1,70 @@
-import Image from "next/image";
+import Link from "next/link";
+
+const entryPoints = [
+  {
+    href: "/restaurants",
+    title: "Order food",
+    body: "Browse restaurants, build a cart, and place an order.",
+    role: "Customer",
+  },
+  {
+    href: "/rider/orders",
+    title: "Deliver orders",
+    body: "See assigned deliveries with pickup and drop-off on a map.",
+    role: "Rider",
+  },
+  {
+    href: "/dashboard",
+    title: "Manage orders",
+    body: "Accept incoming orders and advance their status.",
+    role: "Restaurant",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="mx-auto flex min-h-screen max-w-4xl flex-col justify-center gap-10 px-6 py-16">
+      <header className="space-y-3">
+        <p className="text-sm font-semibold uppercase tracking-wide text-orange-600">
+          Phase 0 scaffold
+        </p>
+        <h1 className="text-4xl font-bold tracking-tight">FoodDelivery</h1>
+        <p className="max-w-2xl text-lg text-gray-600">
+          A food delivery app with live, traffic-aware rider tracking and
+          separate tips for riders and restaurants. Pick a role to explore the
+          (currently placeholder) routes.
+        </p>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <section className="grid gap-4 sm:grid-cols-3">
+        {entryPoints.map((e) => (
+          <Link
+            key={e.href}
+            href={e.href}
+            className="group rounded-xl border border-gray-200 p-5 transition hover:border-orange-500 hover:shadow-sm"
           >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
+            <p className="text-xs font-semibold uppercase tracking-wide text-orange-600">
+              {e.role}
+            </p>
+            <h2 className="mt-1 text-lg font-semibold group-hover:text-orange-600">
+              {e.title}
+            </h2>
+            <p className="mt-2 text-sm text-gray-600">{e.body}</p>
+          </Link>
+        ))}
+      </section>
+
+      <footer className="flex gap-4 text-sm">
+        <Link href="/login" className="text-orange-600 underline">
+          Log in
+        </Link>
+        <Link href="/register" className="text-orange-600 underline">
+          Create account
+        </Link>
+        <a href="/api/health" className="text-gray-500 underline">
+          API health
         </a>
       </footer>
-    </div>
+    </main>
   );
 }
