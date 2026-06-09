@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "@/lib/toast";
 
 export default function ClaimButton({ orderId }: { orderId: string }) {
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function ClaimButton({ orderId }: { orderId: string }) {
       setBusy(false);
       return;
     }
+    toast.success("Delivery claimed");
     router.push(`/rider/orders/${orderId}`);
   }
 

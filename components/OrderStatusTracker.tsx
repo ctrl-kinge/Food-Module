@@ -37,7 +37,11 @@ export default function OrderStatusTracker({
   useEffect(() => {
     const socket = getSocket();
 
-    const onConnect = () => setLive(true);
+    const onConnect = () => {
+      setLive(true);
+      // Re-join the room after an initial connect or a reconnect.
+      socket.emit("order:join", orderId);
+    };
     const onDisconnect = () => setLive(false);
     const onStatus = (data: { orderId: string; status: OrderStatus }) => {
       if (data.orderId === orderId) setStatus(data.status);

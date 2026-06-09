@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import StarRating from "@/components/StarRating";
 import { formatPrice } from "@/lib/format";
+import { toast } from "@/lib/toast";
 
 const TIP_PRESETS = [0, 100, 200, 500];
 
@@ -82,6 +83,7 @@ export default function ReviewTipPanel({ orderId }: { orderId: string }) {
       setSubmitting(false);
       return;
     }
+    toast.success("Thanks for your review!");
     router.refresh();
   }
 

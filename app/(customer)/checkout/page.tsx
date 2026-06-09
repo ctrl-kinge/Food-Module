@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCart, cartSubtotal } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import { useHasMounted } from "@/lib/useHasMounted";
+import { toast } from "@/lib/toast";
 import AddressPicker, { type DeliveryAddress } from "@/components/AddressPicker";
 
 export default function CheckoutPage() {
@@ -66,6 +67,7 @@ export default function CheckoutPage() {
 
     const data = await res.json();
     cart.clear();
+    toast.success("Order placed!");
     router.push(`/orders/${data.id}`);
   }
 

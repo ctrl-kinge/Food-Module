@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCart, cartCount, cartSubtotal } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import { useHasMounted } from "@/lib/useHasMounted";
+import { toast } from "@/lib/toast";
 
 export type MenuItemDTO = {
   menuItemId: string;
@@ -39,9 +40,11 @@ export default function MenuList({
       );
       if (!ok) return;
       cart.startNewCart(restaurantId, restaurantName, payload);
+      toast.success(`${item.name} added to cart`);
       return;
     }
     cart.addItem(restaurantId, restaurantName, payload);
+    toast.success(`${item.name} added to cart`);
   }
 
   const qtyOf = (id: string) =>

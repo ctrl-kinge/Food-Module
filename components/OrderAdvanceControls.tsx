@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { OrderStatus } from "@prisma/client";
 import { NEXT_STATUS, STATUS_LABELS, canCancel } from "@/lib/order-status";
 import { getSocket } from "@/lib/socket-client";
+import { toast } from "@/lib/toast";
 
 export default function OrderAdvanceControls({
   orderId,
@@ -41,6 +42,7 @@ export default function OrderAdvanceControls({
     } catch {
       /* hub may be offline; DB is already updated */
     }
+    toast.success(`Order marked ${STATUS_LABELS[target]}`);
     router.refresh();
     setBusy(false);
   }
