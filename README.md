@@ -4,12 +4,15 @@ A food delivery web app with three roles (Customer / Rider / Restaurant), live
 traffic-aware rider tracking, and separate tips for riders and restaurants.
 
 Built phase by phase from [`FOOD_DELIVERY_ROADMAP.md`](./FOOD_DELIVERY_ROADMAP.md).
-**Current status: Phase 4 (live tracking + traffic-aware ETA).**
+**Current status: Phase 5 — all four requirements (R1–R4) complete.** (Phase 6
+is optional polish.)
 
 > Maps & ETA work without any keys: set `MAPBOX_TOKEN` +
 > `NEXT_PUBLIC_MAPBOX_TOKEN` for a real map and traffic-aware ETA, otherwise the
 > app shows an SVG relative-position map and a Haversine straight-line ETA
-> labelled "estimate (no live traffic)".
+> labelled "estimate (no live traffic)". Tips work without Stripe too: set
+> `STRIPE_SECRET_KEY` to charge test-mode PaymentIntents, otherwise tips are
+> recorded as "simulated".
 
 ## Stack
 

@@ -5,6 +5,8 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
 import OrderStatusTracker from "@/components/OrderStatusTracker";
+import ReviewTipPanel from "@/components/ReviewTipPanel";
+import ReviewSummary from "@/components/ReviewSummary";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +20,7 @@ export default async function OrderPage({
 
   const order = await prisma.order.findUnique({
     where: { id: params.id },
-    include: { items: true, restaurant: true },
+    include: { items: true, restaurant: true, review: true },
   });
 
   // Only the owning customer may view their order.
@@ -75,10 +77,21 @@ export default async function OrderPage({
         </p>
       </section>
 
-      <p className="mt-6 rounded-lg bg-orange-50 p-4 text-sm text-orange-800">
-        Status updates appear live above. A moving rider map + traffic-aware ETA
-        arrive in Phase 4, and ratings/tips in Phase 5.
-      </p>
+      {order.status === "DELIVERED" && (
+        <div className="mt-6">
+          {order.review ? (
+            <ReviewSummary
+              restaurantRating={order.review.restaurantRating}
+              riderRating={order.review.riderRating}
+              comment={order.review.comment}
+              riderTipCents={order.riderTipCents}
+              restaurantTipCents={order.restaurantTipCents}
+            />
+          ) : (
+            <ReviewTipPanel orderId={order.id} />
+          )}
+        </div>
+      )}
 
       <Link
         href="/restaurants"

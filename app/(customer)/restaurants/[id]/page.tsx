@@ -16,6 +16,11 @@ export default async function RestaurantDetailPage({
     include: {
       menu: { where: { available: true }, orderBy: { name: "asc" } },
       _count: { select: { reviews: true } },
+      reviews: {
+        orderBy: { createdAt: "desc" },
+        take: 5,
+        include: { customer: { select: { name: true } } },
+      },
     },
   });
 
@@ -49,6 +54,41 @@ export default async function RestaurantDetailPage({
           }))}
         />
       )}
+
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold">
+          Reviews
+          {restaurant._count.reviews > 0 && ` (${restaurant._count.reviews})`}
+        </h2>
+        {restaurant.reviews.length === 0 ? (
+          <p className="mt-2 text-sm text-gray-600">No reviews yet.</p>
+        ) : (
+          <ul className="mt-3 space-y-3">
+            {restaurant.reviews.map((rv) => (
+              <li key={rv.id} className="rounded-xl border border-gray-200 p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium">{rv.customer.name}</span>
+                  <span
+                    className="text-sm text-amber-500"
+                    aria-label={`${rv.restaurantRating} of 5`}
+                  >
+                    {"★".repeat(rv.restaurantRating)}
+                    <span className="text-gray-300">
+                      {"★".repeat(5 - rv.restaurantRating)}
+                    </span>
+                  </span>
+                </div>
+                {rv.comment && (
+                  <p className="mt-2 text-sm text-gray-700">{rv.comment}</p>
+                )}
+                <p className="mt-1 text-xs text-gray-400">
+                  {new Date(rv.createdAt).toLocaleDateString("en-US")}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }
