@@ -1,4 +1,5 @@
 import { requireRole } from "@/lib/auth-guard";
+import CustomerHeader from "@/components/CustomerHeader";
 
 export default async function CustomerLayout({
   children,
@@ -6,5 +7,10 @@ export default async function CustomerLayout({
   children: React.ReactNode;
 }) {
   await requireRole("CUSTOMER");
-  return <>{children}</>;
+  return (
+    <div className="min-h-screen">
+      <CustomerHeader />
+      {children}
+    </div>
+  );
 }
