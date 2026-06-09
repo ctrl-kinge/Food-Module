@@ -1,4 +1,5 @@
 import { requireRole } from "@/lib/auth-guard";
+import RiderHeader from "@/components/RiderHeader";
 
 export default async function RiderLayout({
   children,
@@ -6,5 +7,10 @@ export default async function RiderLayout({
   children: React.ReactNode;
 }) {
   await requireRole("RIDER");
-  return <>{children}</>;
+  return (
+    <div className="min-h-screen">
+      <RiderHeader />
+      {children}
+    </div>
+  );
 }

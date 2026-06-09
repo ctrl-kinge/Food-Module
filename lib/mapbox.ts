@@ -44,3 +44,35 @@ export function fallbackEta(
     label: "estimate (no live traffic)",
   };
 }
+
+type LngLat = { lat: number; lng: number };
+
+/**
+ * Traffic-aware ETA via the Mapbox Directions API (driving-traffic profile).
+ * Falls back to the Haversine estimate when no MAPBOX_TOKEN is set or the
+ * request fails. Server-side only (uses the secret MAPBOX_TOKEN).
+ */
+export async function computeEta(from: LngLat, to: LngLat): Promise<EtaResult> {
+  const token = process.env.MAPBOX_TOKEN;
+  if (!token) return fallbackEta(from, to);
+
+  try {
+    const coords = `${from.lng},${from.lat};${to.lng},${to.lat}`;
+    const url = `https://api.mapbox.com/directions/v5/mapbox/driving-traffic/${coords}?overview=false&access_token=${token}`;
+    const res = await fetch(url);
+    if (!res.ok) return fallbackEta(from, to);
+    const data = (await res.json()) as {
+      routes?: { duration: number; distance: number }[];
+    };
+    const route = data.routes?.[0];
+    if (!route) return fallbackEta(from, to);
+    return {
+      etaSeconds: Math.round(route.duration),
+      distanceMeters: Math.round(route.distance),
+      trafficAware: true,
+      label: "live traffic",
+    };
+  } catch {
+    return fallbackEta(from, to);
+  }
+}

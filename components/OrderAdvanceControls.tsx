@@ -9,9 +9,11 @@ import { getSocket } from "@/lib/socket-client";
 export default function OrderAdvanceControls({
   orderId,
   status,
+  showCancel = true,
 }: {
   orderId: string;
   status: OrderStatus;
+  showCancel?: boolean;
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
@@ -62,7 +64,7 @@ export default function OrderAdvanceControls({
           {busy ? "Updating…" : `Advance → ${STATUS_LABELS[next]}`}
         </button>
       )}
-      {canCancel(status) && (
+      {showCancel && canCancel(status) && (
         <button
           type="button"
           disabled={busy}

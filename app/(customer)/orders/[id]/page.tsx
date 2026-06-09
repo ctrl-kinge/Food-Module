@@ -33,7 +33,20 @@ export default async function OrderPage({
       </p>
 
       <div className="mt-6">
-        <OrderStatusTracker orderId={order.id} initialStatus={order.status} />
+        <OrderStatusTracker
+          orderId={order.id}
+          initialStatus={order.status}
+          pickup={{
+            lat: order.restaurant.lat,
+            lng: order.restaurant.lng,
+            label: order.restaurant.name,
+          }}
+          dest={{
+            lat: order.destLat,
+            lng: order.destLng,
+            label: "Your address",
+          }}
+        />
       </div>
 
       <section className="mt-6 rounded-xl border border-gray-200 p-4">

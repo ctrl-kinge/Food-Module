@@ -4,7 +4,12 @@ A food delivery web app with three roles (Customer / Rider / Restaurant), live
 traffic-aware rider tracking, and separate tips for riders and restaurants.
 
 Built phase by phase from [`FOOD_DELIVERY_ROADMAP.md`](./FOOD_DELIVERY_ROADMAP.md).
-**Current status: Phase 3 (realtime order status).**
+**Current status: Phase 4 (live tracking + traffic-aware ETA).**
+
+> Maps & ETA work without any keys: set `MAPBOX_TOKEN` +
+> `NEXT_PUBLIC_MAPBOX_TOKEN` for a real map and traffic-aware ETA, otherwise the
+> app shows an SVG relative-position map and a Haversine straight-line ETA
+> labelled "estimate (no live traffic)".
 
 ## Stack
 
