@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
-import StatusBadge from "@/components/StatusBadge";
+import OrderStatusTracker from "@/components/OrderStatusTracker";
 
 export const dynamic = "force-dynamic";
 
@@ -26,14 +26,15 @@ export default async function OrderPage({
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Order confirmed</h1>
-        <StatusBadge status={order.status} />
-      </div>
+      <h1 className="text-2xl font-bold">Order confirmed</h1>
       <p className="mt-1 text-sm text-gray-600">
         From <span className="font-medium">{order.restaurant.name}</span> ·
         order #{order.id.slice(-6)}
       </p>
+
+      <div className="mt-6">
+        <OrderStatusTracker orderId={order.id} initialStatus={order.status} />
+      </div>
 
       <section className="mt-6 rounded-xl border border-gray-200 p-4">
         <h2 className="font-semibold">Items</h2>
@@ -62,8 +63,8 @@ export default async function OrderPage({
       </section>
 
       <p className="mt-6 rounded-lg bg-orange-50 p-4 text-sm text-orange-800">
-        Live tracking with a moving rider and traffic-aware ETA arrives in
-        Phases 3–5. For now this confirms your order is saved.
+        Status updates appear live above. A moving rider map + traffic-aware ETA
+        arrive in Phase 4, and ratings/tips in Phase 5.
       </p>
 
       <Link

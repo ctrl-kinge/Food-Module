@@ -4,7 +4,7 @@ A food delivery web app with three roles (Customer / Rider / Restaurant), live
 traffic-aware rider tracking, and separate tips for riders and restaurants.
 
 Built phase by phase from [`FOOD_DELIVERY_ROADMAP.md`](./FOOD_DELIVERY_ROADMAP.md).
-**Current status: Phase 0 (scaffold).**
+**Current status: Phase 3 (realtime order status).**
 
 ## Stack
 
@@ -21,25 +21,43 @@ Built phase by phase from [`FOOD_DELIVERY_ROADMAP.md`](./FOOD_DELIVERY_ROADMAP.m
 
 ```bash
 npm install
-cp .env.example .env   # then fill in values as needed (all optional for Phase 0)
-npm run dev
+cp .env.example .env   # set DATABASE_URL + DIRECT_URL (Supabase) and NEXTAUTH_SECRET
+npm run db:migrate     # apply schema to your DB
+npm run db:seed        # demo restaurants + users
+npm run dev:all        # runs the web app AND the Socket.IO server together
 ```
 
 Open http://localhost:3000.
 
-The app runs without any API keys in Phase 0. Mapbox/Stripe/DB are wired in
-later phases and each has a documented no-key fallback so the app still runs
-locally.
+- `npm run dev:all` starts Next (port 3000) and the realtime hub (port 4000)
+  together. You can also run them separately: `npm run dev` + `npm run socket`.
+- Mapbox/Stripe are wired in later phases and each has a documented no-key
+  fallback. If the socket server isn't running, order status still works — it
+  just updates on refresh instead of live.
+
+### Demo accounts (after seeding, password `password123`)
+
+| Email | Role |
+|---|---|
+| `customer@example.com` | Customer |
+| `rider1@example.com` / `rider2@example.com` | Rider |
+| `restaurant@example.com` | Restaurant |
+
+To see live status: open `/orders/[id]` as the customer in one browser and
+`/dashboard` as the restaurant in another; advancing status on the dashboard
+updates the customer's tracker instantly.
 
 ## Scripts
 
 | Command | What it does |
 |---|---|
 | `npm run dev` | Start the Next.js dev server (http://localhost:3000) |
+| `npm run dev:all` | Start the web app + Socket.IO hub together |
+| `npm run socket` | Start only the Socket.IO realtime hub (http://localhost:4000) |
 | `npm run build` | Production build |
 | `npm run start` | Run the production build |
 | `npm run lint` | ESLint |
-| `npm run socket` | Start the Socket.IO server (skeleton until Phase 3) |
+| `npm run db:migrate` / `db:seed` / `db:studio` | Prisma migrate / seed / Studio |
 
 ## Routes (Phase 0 placeholders)
 

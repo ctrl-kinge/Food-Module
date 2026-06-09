@@ -1,26 +1,23 @@
 import type { OrderStatus } from "@prisma/client";
+import { STATUS_LABELS } from "@/lib/order-status";
 
-const STATUS_META: Record<OrderStatus, { label: string; className: string }> = {
-  PLACED: { label: "Placed", className: "bg-blue-100 text-blue-800" },
-  ACCEPTED: { label: "Accepted", className: "bg-blue-100 text-blue-800" },
-  PREPARING: { label: "Preparing", className: "bg-amber-100 text-amber-800" },
-  READY_FOR_PICKUP: {
-    label: "Ready for pickup",
-    className: "bg-amber-100 text-amber-800",
-  },
-  PICKED_UP: { label: "Picked up", className: "bg-purple-100 text-purple-800" },
-  EN_ROUTE: { label: "En route", className: "bg-purple-100 text-purple-800" },
-  DELIVERED: { label: "Delivered", className: "bg-green-100 text-green-800" },
-  CANCELLED: { label: "Cancelled", className: "bg-gray-200 text-gray-700" },
+const STATUS_COLORS: Record<OrderStatus, string> = {
+  PLACED: "bg-blue-100 text-blue-800",
+  ACCEPTED: "bg-blue-100 text-blue-800",
+  PREPARING: "bg-amber-100 text-amber-800",
+  READY_FOR_PICKUP: "bg-amber-100 text-amber-800",
+  PICKED_UP: "bg-purple-100 text-purple-800",
+  EN_ROUTE: "bg-purple-100 text-purple-800",
+  DELIVERED: "bg-green-100 text-green-800",
+  CANCELLED: "bg-gray-200 text-gray-700",
 };
 
 export default function StatusBadge({ status }: { status: OrderStatus }) {
-  const meta = STATUS_META[status];
   return (
     <span
-      className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${meta.className}`}
+      className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${STATUS_COLORS[status]}`}
     >
-      {meta.label}
+      {STATUS_LABELS[status]}
     </span>
   );
 }

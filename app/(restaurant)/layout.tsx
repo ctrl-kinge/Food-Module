@@ -1,4 +1,5 @@
 import { requireRole } from "@/lib/auth-guard";
+import RestaurantHeader from "@/components/RestaurantHeader";
 
 export default async function RestaurantLayout({
   children,
@@ -6,5 +7,10 @@ export default async function RestaurantLayout({
   children: React.ReactNode;
 }) {
   await requireRole("RESTAURANT");
-  return <>{children}</>;
+  return (
+    <div className="min-h-screen">
+      <RestaurantHeader />
+      {children}
+    </div>
+  );
 }
