@@ -1,9 +1,5 @@
-// Prisma schema.
-//
-// Phase 0: only the generator + datasource are defined so the toolchain is
-// wired. The full data model (User, Restaurant, MenuItem, Order, OrderItem,
-// Review + enums) is added in Phase 1 — see FOOD_DELIVERY_ROADMAP.md §2 — and
-// committed via `prisma migrate dev`.
+// Prisma schema — Phase 1 data model (see FOOD_DELIVERY_ROADMAP.md §2).
+// Provider: PostgreSQL (hosted, e.g. Neon/Supabase) via DATABASE_URL.
 
 generator client {
   provider = "prisma-client-js"
@@ -12,4 +8,113 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  name        String
+  role        Role     @default(CUSTOMER)
+  phone       String?
+  orders      Order[]  @relation("CustomerOrders")
+  riderOrders Order[]  @relation("RiderOrders")
+  reviews     Review[]
+  createdAt   DateTime @default(now())
+}
+
+enum Role {
+  CUSTOMER
+  RIDER
+  RESTAURANT
+  ADMIN
+}
+
+model Restaurant {
+  id        String     @id @default(cuid())
+  name      String
+  lat       Float
+  lng       Float
+  address   String
+  imageUrl  String?
+  menu      MenuItem[]
+  orders    Order[]
+  reviews   Review[]
+  avgRating Float      @default(0)
+}
+
+model MenuItem {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  name         String
+  description  String?
+  priceCents   Int
+  imageUrl     String?
+  available    Boolean    @default(true)
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  customerId   String
+  customer     User        @relation("CustomerOrders", fields: [customerId], references: [id])
+  riderId      String?
+  rider        User?       @relation("RiderOrders", fields: [riderId], references: [id])
+  restaurantId String
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  items        OrderItem[]
+  status       OrderStatus @default(PLACED)
+
+  // delivery destination
+  destLat     Float
+  destLng     Float
+  destAddress String
+
+  // live rider position (updated in realtime)
+  riderLat   Float?
+  riderLng   Float?
+  etaSeconds Int?
+
+  subtotalCents      Int
+  riderTipCents      Int    @default(0)
+  restaurantTipCents Int    @default(0)
+  review             Review?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  PLACED
+  ACCEPTED
+  PREPARING
+  READY_FOR_PICKUP
+  PICKED_UP
+  EN_ROUTE
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem {
+  id         String @id @default(cuid())
+  orderId    String
+  order      Order  @relation(fields: [orderId], references: [id])
+  menuItemId String
+  name       String // snapshot
+  priceCents Int // snapshot
+  qty        Int
+}
+
+model Review {
+  id               String     @id @default(cuid())
+  orderId          String     @unique
+  order            Order      @relation(fields: [orderId], references: [id])
+  customerId       String
+  customer         User       @relation(fields: [customerId], references: [id])
+  restaurantId     String
+  restaurant       Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantRating Int // 1-5
+  riderRating      Int // 1-5
+  comment          String?
+  createdAt        DateTime   @default(now())
 }
