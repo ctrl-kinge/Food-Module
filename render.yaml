@@ -1,0 +1,17 @@
+# Render Blueprint for the Socket.IO realtime hub.
+# In the Render dashboard: New + > Blueprint > pick this repo. It reads this file.
+# After the web app is deployed on Vercel, set CLIENT_ORIGIN to that URL.
+services:
+  - type: web
+    name: food-delivery-socket
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run socket
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Set this to your deployed Vercel URL, e.g. https://food-delivery.vercel.app
+      - key: CLIENT_ORIGIN
+        sync: false

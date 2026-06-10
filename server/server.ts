@@ -18,8 +18,11 @@ import { computeEta } from "../lib/mapbox";
  *   status:relay               client -> hub   -> broadcasts order:status to room
  *   rider:location             rider  -> hub   -> relays rider:location + emits order:eta
  */
-const PORT = Number(process.env.SOCKET_PORT ?? 4000);
-const ORIGIN = process.env.NEXTAUTH_URL ?? "http://localhost:3000";
+// Hosts (Render/Railway) inject PORT; fall back to SOCKET_PORT then 4000 locally.
+const PORT = Number(process.env.PORT ?? process.env.SOCKET_PORT ?? 4000);
+// In production set CLIENT_ORIGIN to the deployed web URL (for Socket.IO CORS).
+const ORIGIN =
+  process.env.CLIENT_ORIGIN ?? process.env.NEXTAUTH_URL ?? "http://localhost:3000";
 
 type RiderPing = {
   orderId?: string;
