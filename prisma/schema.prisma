@@ -21,8 +21,9 @@ model User {
   role        Role     @default(CUSTOMER)
   phone       String?
   orders      Order[]  @relation("CustomerOrders")
-  riderOrders Order[]  @relation("RiderOrders")
-  reviews     Review[]
+  riderOrders     Order[]     @relation("RiderOrders")
+  ownedRestaurant Restaurant? @relation("RestaurantOwner")
+  reviews         Review[]
   createdAt   DateTime @default(now())
 }
 
@@ -40,6 +41,9 @@ model Restaurant {
   lng       Float
   address   String
   imageUrl  String?
+  isOpen    Boolean    @default(true)
+  ownerId   String?    @unique
+  owner     User?      @relation("RestaurantOwner", fields: [ownerId], references: [id])
   menu      MenuItem[]
   orders    Order[]
   reviews   Review[]
@@ -54,6 +58,7 @@ model MenuItem {
   description  String?
   priceCents   Int
   imageUrl     String?
+  category     String?
   available    Boolean    @default(true)
 }
 
