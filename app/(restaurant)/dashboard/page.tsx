@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
 import StatusBadge from "@/components/StatusBadge";
 import OrderAdvanceControls from "@/components/OrderAdvanceControls";
+import DashboardLive from "@/components/DashboardLive";
 import type { OrderStatus } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
@@ -57,9 +58,13 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-8">
-      <h1 className="text-2xl font-bold">Incoming orders</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Incoming orders</h1>
+        <DashboardLive />
+      </div>
       <p className="mt-1 text-sm text-gray-600">
         Advance each order through the lifecycle — customers see changes live.
+        New orders appear here automatically.
       </p>
 
       <section className="mt-6">

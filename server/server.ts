@@ -53,6 +53,12 @@ io.on("connection", (socket: Socket) => {
     if (typeof orderId === "string" && orderId) socket.leave(`order:${orderId}`);
   });
 
+  // Restaurant dashboard live updates (a shared "dashboard" room).
+  socket.on("dashboard:join", () => socket.join("dashboard"));
+  socket.on("dashboard:notify", () =>
+    io.to("dashboard").emit("dashboard:refresh"),
+  );
+
   // Restaurant/rider advanced the status (already persisted via the API) —
   // fan it out to everyone watching this order.
   socket.on("status:relay", (data: { orderId?: string; status?: string }) => {
@@ -61,6 +67,8 @@ io.on("connection", (socket: Socket) => {
       orderId: data.orderId,
       status: data.status,
     });
+    // Any status change also refreshes open restaurant dashboards.
+    io.to("dashboard").emit("dashboard:refresh");
   });
 
   // Rider GPS ping: relay the position to watchers, then recompute the

@@ -7,6 +7,7 @@ import { useCart, cartSubtotal } from "@/lib/cart";
 import { formatPrice } from "@/lib/format";
 import { useHasMounted } from "@/lib/useHasMounted";
 import { toast } from "@/lib/toast";
+import { getSocket } from "@/lib/socket-client";
 import AddressPicker, { type DeliveryAddress } from "@/components/AddressPicker";
 
 export default function CheckoutPage() {
@@ -68,6 +69,12 @@ export default function CheckoutPage() {
     const data = await res.json();
     cart.clear();
     toast.success("Order placed!");
+    // Nudge any open restaurant dashboard to refresh.
+    try {
+      getSocket().emit("dashboard:notify");
+    } catch {
+      /* hub offline; dashboard will catch it on next manual refresh */
+    }
     router.push(`/orders/${data.id}`);
   }
 
