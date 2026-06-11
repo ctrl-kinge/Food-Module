@@ -16,6 +16,9 @@ export default function CustomerHeader() {
           >
             Restaurants
           </Link>
+          <Link href="/orders" className="text-gray-700 hover:text-orange-600">
+            Orders
+          </Link>
           <CartButton />
           <SignOutButton />
         </nav>
