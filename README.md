@@ -66,6 +66,18 @@ updates the customer's tracker instantly.
 | `npm run start` | Run the production build |
 | `npm run lint` | ESLint |
 | `npm run db:migrate` / `db:seed` / `db:studio` | Prisma migrate / seed / Studio |
+| `npm run test` / `test:run` | Vitest unit tests (watch / once) |
+| `npm run test:e2e` | Playwright smoke tests (boots a dev server) |
+
+## Testing
+
+- **Unit (Vitest, jsdom):** cart store, order-status state machine, ETA/Haversine
+  math, and formatters — `npm run test:run`.
+- **End-to-end (Playwright):** a smoke spec for the landing page, public login,
+  the customer route guard, and the health endpoint — `npm run test:e2e`
+  (first run: `npx playwright install chromium`).
+- **CI:** [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) runs the build
+  (lint + typecheck), unit tests, and the Playwright smoke on every push/PR.
 
 ## Routes (Phase 0 placeholders)
 
