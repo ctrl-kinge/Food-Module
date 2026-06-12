@@ -9,6 +9,7 @@ import { useHasMounted } from "@/lib/useHasMounted";
 import { toast } from "@/lib/toast";
 import { getSocket } from "@/lib/socket-client";
 import AddressPicker, { type DeliveryAddress } from "@/components/AddressPicker";
+import SavedAddresses from "@/components/SavedAddresses";
 import { Card, Button } from "@/components/ui";
 
 export default function CheckoutPage() {
@@ -125,6 +126,9 @@ export default function CheckoutPage() {
 
       <Card className="mt-6">
         <h2 className="font-semibold">Delivery location</h2>
+        <div className="mt-3">
+          <SavedAddresses current={addr} onSelect={setAddr} />
+        </div>
         <div className="mt-3">
           <AddressPicker onChange={setAddr} />
         </div>
