@@ -15,7 +15,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
+    <main id="main-content" className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
       <h1 className="text-2xl font-bold">Something went wrong</h1>
       <p className="text-sm text-gray-600">
         An unexpected error occurred. Please try again.
@@ -23,7 +23,7 @@ export default function Error({
       <button
         type="button"
         onClick={reset}
-        className="rounded-md bg-orange-600 px-4 py-2 font-medium text-white hover:bg-orange-700"
+        className="rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700"
       >
         Try again
       </button>

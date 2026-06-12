@@ -112,18 +112,20 @@ export default function MenuManager({
         <h2 className="font-semibold">Add an item</h2>
         <form onSubmit={addItem} className="mt-3 grid gap-3 sm:grid-cols-2">
           <Field label="Name">
-            {({ id }) => (
+            {({ id, describedBy }) => (
               <Input
                 id={id}
+                aria-describedby={describedBy}
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
               />
             )}
           </Field>
           <Field label="Price (USD)">
-            {({ id }) => (
+            {({ id, describedBy }) => (
               <Input
                 id={id}
+                aria-describedby={describedBy}
                 inputMode="decimal"
                 placeholder="8.50"
                 value={form.priceDollars}
@@ -134,18 +136,20 @@ export default function MenuManager({
             )}
           </Field>
           <Field label="Category (optional)">
-            {({ id }) => (
+            {({ id, describedBy }) => (
               <Input
                 id={id}
+                aria-describedby={describedBy}
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
               />
             )}
           </Field>
           <Field label="Description (optional)">
-            {({ id }) => (
+            {({ id, describedBy }) => (
               <Textarea
                 id={id}
+                aria-describedby={describedBy}
                 rows={1}
                 value={form.description}
                 onChange={(e) =>
