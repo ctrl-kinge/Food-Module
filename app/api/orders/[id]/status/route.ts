@@ -4,7 +4,9 @@ import { getServerSession } from "next-auth";
 import type { OrderStatus } from "@prisma/client";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { NEXT_STATUS, canCancel, ALL_STATUSES } from "@/lib/order-status";
+import { NEXT_STATUS, canCancel, ALL_STATUSES, STATUS_LABELS } from "@/lib/order-status";
+import { createNotification } from "@/lib/notify";
+import { notificationContent } from "@/lib/notify-format";
 import { selectNearestRider } from "@/lib/dispatch";
 
 const StatusSchema = z.object({
@@ -96,6 +98,21 @@ export async function PATCH(
     data,
   });
 
+  {
+    const c = notificationContent("ORDER_STATUS", {
+      orderShortId: order.id.slice(-6),
+      statusLabel: STATUS_LABELS[target],
+    });
+    await createNotification({
+      userId: order.customerId,
+      type: "ORDER_STATUS",
+      title: c.title,
+      body: c.body,
+      orderId: order.id,
+      url: `/orders/${order.id}`,
+    });
+  }
+
   // When an order becomes ready and has no rider, auto-assign the nearest
   // online rider. Best-effort: if none are online it stays open for manual
   // claim (the existing /assign flow), and any failure here doesn't block the
@@ -126,6 +143,17 @@ export async function PATCH(
           await prisma.order.update({
             where: { id: order.id },
             data: { riderId },
+          });
+          const c = notificationContent("ASSIGNED", {
+            orderShortId: order.id.slice(-6),
+          });
+          await createNotification({
+            userId: riderId,
+            type: "ASSIGNED",
+            title: c.title,
+            body: c.body,
+            orderId: order.id,
+            url: `/rider/orders/${order.id}`,
           });
         }
       }

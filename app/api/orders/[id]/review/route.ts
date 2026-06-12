@@ -90,6 +90,35 @@ export async function POST(
     });
   });
 
+  {
+    const { notificationContent } = await import("@/lib/notify-format");
+    const { createNotification } = await import("@/lib/notify");
+    const c = notificationContent("REVIEW", { orderShortId: order.id.slice(-6) });
+    const restaurant = await prisma.restaurant.findUnique({
+      where: { id: order.restaurantId },
+      select: { ownerId: true },
+    });
+    if (restaurant?.ownerId) {
+      await createNotification({
+        userId: restaurant.ownerId,
+        type: "REVIEW",
+        title: c.title,
+        body: c.body,
+        orderId: order.id,
+        url: "/dashboard",
+      });
+    }
+    if (order.riderId) {
+      await createNotification({
+        userId: order.riderId,
+        type: "REVIEW",
+        title: c.title,
+        body: c.body,
+        orderId: order.id,
+      });
+    }
+  }
+
   return NextResponse.json({
     ok: true,
     simulatedTips: riderTip.simulated || restaurantTip.simulated,

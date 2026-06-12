@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { isOpen: true },
+    select: { isOpen: true, ownerId: true, name: true },
   });
   if (!restaurant) {
     return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
@@ -92,6 +92,20 @@ export async function POST(req: Request) {
       items: { create: orderItems },
     },
   });
+
+  if (restaurant.ownerId) {
+    const { notificationContent } = await import("@/lib/notify-format");
+    const { createNotification } = await import("@/lib/notify");
+    const c = notificationContent("NEW_ORDER", { orderShortId: order.id.slice(-6) });
+    await createNotification({
+      userId: restaurant.ownerId,
+      type: "NEW_ORDER",
+      title: c.title,
+      body: c.body,
+      orderId: order.id,
+      url: "/dashboard",
+    });
+  }
 
   return NextResponse.json({ id: order.id }, { status: 201 });
 }
