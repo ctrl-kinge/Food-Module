@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NotificationBell from "@/components/NotificationBell";
 import SignOutButton from "@/components/SignOutButton";
 
 export default function RiderHeader() {
@@ -16,6 +17,7 @@ export default function RiderHeader() {
           >
             My deliveries
           </Link>
+          <NotificationBell />
           <SignOutButton />
         </nav>
       </div>

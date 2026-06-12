@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NotificationBell from "@/components/NotificationBell";
 import SignOutButton from "@/components/SignOutButton";
 
 export default function RestaurantHeader() {
@@ -24,7 +25,10 @@ export default function RestaurantHeader() {
             </Link>
           </nav>
         </div>
-        <SignOutButton />
+        <div className="flex items-center gap-3">
+          <NotificationBell />
+          <SignOutButton />
+        </div>
       </div>
     </header>
   );
