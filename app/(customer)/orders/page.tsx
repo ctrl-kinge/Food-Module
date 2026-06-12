@@ -24,7 +24,7 @@ export default async function OrdersPage() {
           <p className="text-gray-600">You haven&rsquo;t ordered anything yet.</p>
           <Link
             href="/restaurants"
-            className="mt-4 inline-block rounded-md bg-orange-600 px-4 py-2 font-medium text-white hover:bg-orange-700"
+            className="mt-4 inline-block rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700"
           >
             Browse restaurants
           </Link>
@@ -35,7 +35,7 @@ export default async function OrdersPage() {
             <li key={o.id}>
               <Link
                 href={`/orders/${o.id}`}
-                className="block rounded-xl border border-gray-200 p-4 transition hover:border-orange-500 hover:shadow-sm"
+                className="block rounded-xl border border-gray-200 p-4 transition hover:border-brand-500 hover:shadow-sm"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>

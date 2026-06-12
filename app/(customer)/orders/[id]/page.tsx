@@ -7,6 +7,8 @@ import { formatPrice } from "@/lib/format";
 import OrderStatusTracker from "@/components/OrderStatusTracker";
 import ReviewTipPanel from "@/components/ReviewTipPanel";
 import ReviewSummary from "@/components/ReviewSummary";
+import ReorderButton from "@/components/ReorderButton";
+import { Card } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +36,19 @@ export default async function OrderPage({
         order #{order.id.slice(-6)}
       </p>
 
+      <div className="mt-3">
+        <ReorderButton
+          restaurantId={order.restaurantId}
+          restaurantName={order.restaurant.name}
+          items={order.items.map((i) => ({
+            menuItemId: i.menuItemId,
+            name: i.name,
+            priceCents: i.priceCents,
+            qty: i.qty,
+          }))}
+        />
+      </div>
+
       <div className="mt-6">
         <OrderStatusTracker
           orderId={order.id}
@@ -51,7 +66,7 @@ export default async function OrderPage({
         />
       </div>
 
-      <section className="mt-6 rounded-xl border border-gray-200 p-4">
+      <Card className="mt-6">
         <h2 className="font-semibold">Items</h2>
         <ul className="mt-3 divide-y divide-gray-100">
           {order.items.map((i) => (
@@ -67,15 +82,15 @@ export default async function OrderPage({
           <span>Subtotal</span>
           <span>{formatPrice(order.subtotalCents)}</span>
         </div>
-      </section>
+      </Card>
 
-      <section className="mt-6 rounded-xl border border-gray-200 p-4">
+      <Card className="mt-6">
         <h2 className="font-semibold">Delivering to</h2>
         <p className="mt-2 text-sm text-gray-700">{order.destAddress}</p>
         <p className="text-xs text-gray-500">
           {order.destLat.toFixed(4)}, {order.destLng.toFixed(4)}
         </p>
-      </section>
+      </Card>
 
       {order.status === "DELIVERED" && (
         <div className="mt-6">
@@ -95,7 +110,7 @@ export default async function OrderPage({
 
       <Link
         href="/restaurants"
-        className="mt-6 inline-block text-sm text-orange-600 underline"
+        className="mt-6 inline-block text-sm text-brand-600 underline"
       >
         &larr; Back to restaurants
       </Link>
