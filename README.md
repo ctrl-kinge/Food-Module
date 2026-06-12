@@ -14,6 +14,30 @@ is optional polish.)
 > `STRIPE_SECRET_KEY` to charge test-mode PaymentIntents, otherwise tips are
 > recorded as "simulated".
 
+### Web push notifications
+
+The app has an in-app notification center (the bell in the header) plus optional
+real **web push** so order events reach users even when the app is closed.
+
+1. Generate a VAPID key pair (no account needed):
+
+   ```bash
+   npx web-push generate-vapid-keys
+   ```
+
+2. Set these in `.env` (local) and in your Vercel project (production):
+
+   ```
+   VAPID_PUBLIC_KEY=<public key>
+   VAPID_PRIVATE_KEY=<private key>
+   NEXT_PUBLIC_VAPID_PUBLIC_KEY=<same public key>
+   VAPID_SUBJECT=mailto:you@example.com
+   ```
+
+Without these keys, push is a no-op and the **in-app notification bell still
+works** (it polls for new notifications). iOS Safari only delivers web push to an
+installed PWA; the in-app center covers that case.
+
 ## Stack
 
 - Next.js 14 (App Router) + TypeScript
