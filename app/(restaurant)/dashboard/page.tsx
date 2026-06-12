@@ -42,6 +42,12 @@ function OrderCard({ order }: { order: OrderRow }) {
       </div>
       <p className="mt-2 text-sm text-gray-700">{itemSummary}</p>
       <p className="mt-1 text-sm text-gray-500">{order.destAddress}</p>
+      {order.prepMinutes != null && (
+        <p className="mt-1 text-xs text-gray-500">Prep estimate: {order.prepMinutes} min</p>
+      )}
+      {order.cancelReason && (
+        <p className="mt-1 text-xs text-red-600">Rejected: {order.cancelReason}</p>
+      )}
       <div className="mt-3 flex items-center justify-between">
         <span className="text-sm font-medium">
           {formatPrice(order.subtotalCents)}

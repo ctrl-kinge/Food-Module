@@ -9,6 +9,8 @@ import { selectNearestRider } from "@/lib/dispatch";
 
 const StatusSchema = z.object({
   status: z.enum(ALL_STATUSES as [string, ...string[]]),
+  prepMinutes: z.number().int().positive().max(240).optional(),
+  reason: z.string().trim().max(280).optional(),
 });
 
 // Transitions owned by the restaurant vs the rider (by the *current* status).
@@ -78,9 +80,20 @@ export async function PATCH(
     );
   }
 
+  const data: {
+    status: OrderStatus;
+    prepMinutes?: number;
+    cancelReason?: string;
+  } = { status: target };
+  if (target === "ACCEPTED" && parsed.data.prepMinutes != null) {
+    data.prepMinutes = parsed.data.prepMinutes;
+  }
+  if (target === "CANCELLED" && parsed.data.reason) {
+    data.cancelReason = parsed.data.reason;
+  }
   const updated = await prisma.order.update({
     where: { id: params.id },
-    data: { status: target },
+    data,
   });
 
   // When an order becomes ready and has no rider, auto-assign the nearest
