@@ -64,6 +64,17 @@ export default function SavedAddresses({
     load();
   }
 
+  // Which saved address (if any) matches the currently chosen delivery address.
+  const activeSaved =
+    current && current.address
+      ? items.find(
+          (a) =>
+            a.address === current.address &&
+            a.lat === current.lat &&
+            a.lng === current.lng,
+        )
+      : undefined;
+
   return (
     <div>
       {items.length > 0 && (
@@ -93,7 +104,13 @@ export default function SavedAddresses({
           ))}
         </ul>
       )}
-      {current && current.address && (
+      {activeSaved && (
+        <p className="mt-2 text-xs text-gray-600">
+          Delivering to saved address:{" "}
+          <span className="font-medium">{activeSaved.label}</span>
+        </p>
+      )}
+      {current && current.address && !activeSaved && (
         <div className="mt-2">
           <Button variant="ghost" size="sm" onClick={saveCurrent}>
             Save current address
