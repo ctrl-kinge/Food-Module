@@ -5,6 +5,7 @@ import type { OrderStatus } from "@prisma/client";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { NEXT_STATUS, canCancel, ALL_STATUSES } from "@/lib/order-status";
+import { selectNearestRider } from "@/lib/dispatch";
 
 const StatusSchema = z.object({
   status: z.enum(ALL_STATUSES as [string, ...string[]]),
@@ -81,6 +82,44 @@ export async function PATCH(
     where: { id: params.id },
     data: { status: target },
   });
+
+  // When an order becomes ready and has no rider, auto-assign the nearest
+  // online rider. Best-effort: if none are online it stays open for manual
+  // claim (the existing /assign flow), and any failure here doesn't block the
+  // status change that already succeeded.
+  if (target === "READY_FOR_PICKUP" && !order.riderId) {
+    try {
+      const [restaurant, riders] = await Promise.all([
+        prisma.restaurant.findUnique({
+          where: { id: order.restaurantId },
+          select: { lat: true, lng: true },
+        }),
+        prisma.user.findMany({
+          where: {
+            role: "RIDER",
+            isOnline: true,
+            lastLat: { not: null },
+            lastLng: { not: null },
+          },
+          select: { id: true, lastLat: true, lastLng: true },
+        }),
+      ]);
+      if (restaurant) {
+        const riderId = selectNearestRider(
+          { lat: restaurant.lat, lng: restaurant.lng },
+          riders,
+        );
+        if (riderId) {
+          await prisma.order.update({
+            where: { id: order.id },
+            data: { riderId },
+          });
+        }
+      }
+    } catch {
+      /* best-effort assignment; order remains claimable */
+    }
+  }
 
   return NextResponse.json({ id: updated.id, status: updated.status });
 }
