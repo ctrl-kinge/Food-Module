@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import RestaurantCard from "@/components/RestaurantCard";
+import { Container, PageHeader, EmptyState } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -10,12 +11,12 @@ export default async function RestaurantsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-8">
-      <h1 className="text-2xl font-bold">Restaurants</h1>
-      <p className="mt-1 text-sm text-gray-600">Choose a place to order from.</p>
-
+    <Container>
+      <PageHeader title="Restaurants" subtitle="Choose a place to order from." />
       {restaurants.length === 0 ? (
-        <p className="mt-8 text-gray-600">No restaurants yet.</p>
+        <div className="mt-8">
+          <EmptyState message="No restaurants yet." />
+        </div>
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {restaurants.map((r) => (
@@ -25,6 +26,7 @@ export default async function RestaurantsPage() {
               name={r.name}
               address={r.address}
               imageUrl={r.imageUrl}
+              isOpen={r.isOpen}
               avgRating={r.avgRating}
               menuCount={r._count.menu}
               reviewCount={r._count.reviews}
@@ -32,6 +34,6 @@ export default async function RestaurantsPage() {
           ))}
         </div>
       )}
-    </div>
+    </Container>
   );
 }

@@ -42,6 +42,20 @@ export async function POST(req: Request) {
 
   const { restaurantId, items, destAddress, destLat, destLng } = parsed.data;
 
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { isOpen: true },
+  });
+  if (!restaurant) {
+    return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
+  }
+  if (!restaurant.isOpen) {
+    return NextResponse.json(
+      { error: "This restaurant is currently closed" },
+      { status: 409 },
+    );
+  }
+
   // Snapshot authoritative names/prices from the DB — never trust client prices.
   const ids = items.map((i) => i.menuItemId);
   const menuItems = await prisma.menuItem.findMany({

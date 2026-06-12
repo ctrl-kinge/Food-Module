@@ -17,10 +17,12 @@ export default function MenuList({
   restaurantId,
   restaurantName,
   items,
+  isOpen = true,
 }: {
   restaurantId: string;
   restaurantName: string;
   items: MenuItemDTO[];
+  isOpen?: boolean;
 }) {
   const cart = useCart();
   const mounted = useHasMounted();
@@ -69,7 +71,9 @@ export default function MenuList({
                   {formatPrice(item.priceCents)}
                 </p>
               </div>
-              {qty > 0 ? (
+              {!isOpen ? (
+                <span className="text-sm text-gray-400">Closed</span>
+              ) : qty > 0 ? (
                 <div className="flex items-center gap-2">
                   <button
                     type="button"

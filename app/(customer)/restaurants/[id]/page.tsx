@@ -40,12 +40,19 @@ export default async function RestaurantDetailPage({
         />
       </div>
 
+      {!restaurant.isOpen && (
+        <p className="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          This restaurant is currently closed and isn&apos;t accepting orders.
+        </p>
+      )}
+
       {restaurant.menu.length === 0 ? (
         <p className="mt-8 text-gray-600">No items available right now.</p>
       ) : (
         <MenuList
           restaurantId={restaurant.id}
           restaurantName={restaurant.name}
+          isOpen={restaurant.isOpen}
           items={restaurant.menu.map((m) => ({
             menuItemId: m.id,
             name: m.name,
