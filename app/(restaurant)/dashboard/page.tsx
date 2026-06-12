@@ -4,6 +4,7 @@ import StatusBadge from "@/components/StatusBadge";
 import OrderAdvanceControls from "@/components/OrderAdvanceControls";
 import DashboardLive from "@/components/DashboardLive";
 import type { OrderStatus } from "@prisma/client";
+import { Container, PageHeader, Card } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,7 @@ function OrderCard({ order }: { order: OrderRow }) {
     .map((i) => `${i.qty}× ${i.name}`)
     .join(", ");
   return (
-    <li className="rounded-xl border border-gray-200 p-4">
+    <li><Card>
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-semibold">{order.restaurant.name}</p>
@@ -47,7 +48,7 @@ function OrderCard({ order }: { order: OrderRow }) {
         </span>
         <OrderAdvanceControls orderId={order.id} status={order.status} />
       </div>
-    </li>
+    </Card></li>
   );
 }
 
@@ -57,15 +58,12 @@ export default async function DashboardPage() {
   const past = orders.filter((o) => TERMINAL.includes(o.status));
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Incoming orders</h1>
-        <DashboardLive />
-      </div>
-      <p className="mt-1 text-sm text-gray-600">
-        Advance each order through the lifecycle — customers see changes live.
-        New orders appear here automatically.
-      </p>
+    <Container size="sm">
+      <PageHeader
+        title="Incoming orders"
+        subtitle="Advance each order through the lifecycle — customers see changes live. New orders appear here automatically."
+        actions={<DashboardLive />}
+      />
 
       <section className="mt-6">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
@@ -94,6 +92,6 @@ export default async function DashboardPage() {
           </ul>
         </section>
       )}
-    </div>
+    </Container>
   );
 }
