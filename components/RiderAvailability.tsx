@@ -14,6 +14,7 @@ export default function RiderAvailability({
   const [online, setOnline] = useState(initialOnline);
   const [busy, setBusy] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const warned = useRef(false);
 
   function pushLocation() {
     if (!("geolocation" in navigator)) return;
@@ -28,7 +29,14 @@ export default function RiderAvailability({
           }),
         }).catch(() => {});
       },
-      () => {},
+      (err) => {
+        if (err.code === err.PERMISSION_DENIED && !warned.current) {
+          warned.current = true;
+          toast.error(
+            "Location is blocked — enable it so we can auto-assign you nearby orders.",
+          );
+        }
+      },
       { enableHighAccuracy: true, maximumAge: 15_000 },
     );
   }
