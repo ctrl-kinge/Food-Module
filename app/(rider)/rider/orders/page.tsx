@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { formatPrice } from "@/lib/format";
 import StatusBadge from "@/components/StatusBadge";
 import ClaimButton from "@/components/ClaimButton";
+import { Container, PageHeader, Card } from "@/components/ui";
+import RiderAvailability from "@/components/RiderAvailability";
 
 export const dynamic = "force-dynamic";
 
@@ -30,24 +32,26 @@ function OrderCard({
 }) {
   const itemSummary = order.items.map((i) => `${i.qty}× ${i.name}`).join(", ");
   return (
-    <li className="rounded-xl border border-gray-200 p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="font-semibold">{order.restaurant.name}</p>
-          <p className="text-xs text-gray-500">
-            Pickup: {order.restaurant.address}
-          </p>
-          <p className="text-xs text-gray-500">Drop-off: {order.destAddress}</p>
+    <li>
+      <Card>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="font-semibold">{order.restaurant.name}</p>
+            <p className="text-xs text-gray-500">
+              Pickup: {order.restaurant.address}
+            </p>
+            <p className="text-xs text-gray-500">Drop-off: {order.destAddress}</p>
+          </div>
+          <StatusBadge status={order.status} />
         </div>
-        <StatusBadge status={order.status} />
-      </div>
-      <p className="mt-2 text-sm text-gray-700">{itemSummary}</p>
-      <div className="mt-3 flex items-center justify-between">
-        <span className="text-sm font-medium">
-          {formatPrice(order.subtotalCents)}
-        </span>
-        {action}
-      </div>
+        <p className="mt-2 text-sm text-gray-700">{itemSummary}</p>
+        <div className="mt-3 flex items-center justify-between">
+          <span className="text-sm font-medium">
+            {formatPrice(order.subtotalCents)}
+          </span>
+          {action}
+        </div>
+      </Card>
     </li>
   );
 }
@@ -55,6 +59,10 @@ function OrderCard({
 export default async function RiderOrdersPage() {
   const session = await getServerSession(authOptions);
   const riderId = session!.user.id;
+  const me = await prisma.user.findUnique({
+    where: { id: riderId },
+    select: { isOnline: true },
+  });
 
   const [available, mine] = await Promise.all([
     fetchAvailable(),
@@ -72,8 +80,14 @@ export default async function RiderOrdersPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-8">
-      <h1 className="text-2xl font-bold">Deliveries</h1>
+    <Container size="sm">
+      <PageHeader
+        title="Deliveries"
+        subtitle="Go online to get auto-assigned the nearest ready orders."
+      />
+      <div className="mt-6">
+        <RiderAvailability initialOnline={me?.isOnline ?? false} />
+      </div>
 
       <section className="mt-6">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
@@ -90,7 +104,7 @@ export default async function RiderOrdersPage() {
                 action={
                   <Link
                     href={`/rider/orders/${o.id}`}
-                    className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-orange-700"
+                    className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-700"
                   >
                     Open
                   </Link>
@@ -121,6 +135,6 @@ export default async function RiderOrdersPage() {
           </ul>
         )}
       </section>
-    </div>
+    </Container>
   );
 }
