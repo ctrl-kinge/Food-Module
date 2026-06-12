@@ -34,7 +34,7 @@ export default async function RiderOrderDetailPage({
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-8">
-      <Link href="/rider/orders" className="text-sm text-orange-600 underline">
+      <Link href="/rider/orders" className="text-sm text-brand-600 underline">
         &larr; All deliveries
       </Link>
       <div className="mt-2 flex items-center justify-between">
