@@ -29,6 +29,7 @@ model User {
   reviews           Review[]
   notifications     Notification[]
   pushSubscriptions PushSubscription[]
+  addresses         Address[]
   createdAt   DateTime @default(now())
 }
 
@@ -163,4 +164,18 @@ model PushSubscription {
   p256dh    String
   auth      String
   createdAt DateTime @default(now())
+}
+
+model Address {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  label     String
+  address   String
+  lat       Float
+  lng       Float
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
 }
