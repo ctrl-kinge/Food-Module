@@ -10,7 +10,7 @@ export default async function RiderLayout({
   return (
     <div className="min-h-screen">
       <RiderHeader />
-      {children}
+      <main id="main-content">{children}</main>
     </div>
   );
 }

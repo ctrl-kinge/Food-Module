@@ -12,7 +12,7 @@ export default async function CustomerLayout({
     <div className="min-h-screen">
       <CustomerHeader />
       <ActiveOrderBanner customerId={session.user.id} />
-      {children}
+      <main id="main-content">{children}</main>
     </div>
   );
 }

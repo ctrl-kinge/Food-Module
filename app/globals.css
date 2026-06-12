@@ -6,7 +6,23 @@
 body {
   color: #171717;
   background: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Skip link: visually hidden until focused. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 50;
+  border-radius: 0.375rem;
+  background: #ea580c;
+  color: #ffffff;
+  padding: 0.5rem 0.75rem;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 0.5rem;
 }
 
 @layer utilities {

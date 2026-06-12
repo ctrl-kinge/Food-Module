@@ -10,7 +10,7 @@ export default async function RestaurantLayout({
   return (
     <div className="min-h-screen">
       <RestaurantHeader />
-      {children}
+      <main id="main-content">{children}</main>
     </div>
   );
 }

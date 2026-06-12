@@ -23,7 +23,7 @@ const entryPoints = [
 
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-4xl flex-col justify-center gap-10 px-6 py-16">
+    <main id="main-content" className="mx-auto flex min-h-screen max-w-4xl flex-col justify-center gap-10 px-6 py-16">
       <header className="space-y-3">
         <p className="text-sm font-semibold uppercase tracking-wide text-orange-600">
           Phase 0 scaffold
