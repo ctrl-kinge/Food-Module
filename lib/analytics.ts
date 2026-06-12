@@ -40,7 +40,7 @@ export function summarizeOrders(
       itemQty.set(it.name, (itemQty.get(it.name) ?? 0) + it.qty);
     }
   }
-  const topItems = [...itemQty.entries()]
+  const topItems = Array.from(itemQty.entries())
     .map(([name, qty]) => ({ name, qty }))
     .sort((a, b) => b.qty - a.qty)
     .slice(0, 5);

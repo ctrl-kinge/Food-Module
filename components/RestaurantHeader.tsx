@@ -23,6 +23,12 @@ export default function RestaurantHeader() {
             >
               Menu
             </Link>
+            <Link
+              href="/dashboard/analytics"
+              className="text-gray-700 hover:text-brand-600"
+            >
+              Analytics
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-3">
