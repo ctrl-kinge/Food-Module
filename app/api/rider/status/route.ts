@@ -18,6 +18,21 @@ export async function PATCH(req: Request) {
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
+  // A rider can't go offline while a delivery is still in progress.
+  if (!parsed.data.isOnline) {
+    const active = await prisma.order.count({
+      where: {
+        riderId: session.user.id,
+        status: { in: ["READY_FOR_PICKUP", "PICKED_UP", "EN_ROUTE"] },
+      },
+    });
+    if (active > 0) {
+      return NextResponse.json(
+        { error: "Finish your active delivery before going offline" },
+        { status: 409 },
+      );
+    }
+  }
   const user = await prisma.user.update({
     where: { id: session.user.id },
     data: { isOnline: parsed.data.isOnline },

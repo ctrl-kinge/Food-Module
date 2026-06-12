@@ -8,8 +8,10 @@ const PING_MS = 20_000;
 
 export default function RiderAvailability({
   initialOnline,
+  hasActiveDelivery,
 }: {
   initialOnline: boolean;
+  hasActiveDelivery: boolean;
 }) {
   const [online, setOnline] = useState(initialOnline);
   const [busy, setBusy] = useState(false);
@@ -58,6 +60,10 @@ export default function RiderAvailability({
   }, [online]);
 
   async function toggle() {
+    if (online && hasActiveDelivery) {
+      toast.error("Finish your active delivery before going offline");
+      return;
+    }
     setBusy(true);
     const next = !online;
     const res = await fetch("/api/rider/status", {
@@ -66,10 +72,15 @@ export default function RiderAvailability({
       body: JSON.stringify({ isOnline: next }),
     });
     setBusy(false);
-    if (!res.ok) return toast.error("Could not update availability");
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      return toast.error(data.error ?? "Could not update availability");
+    }
     setOnline(next);
     toast.success(next ? "You’re online" : "You’re offline");
   }
+
+  const cannotGoOffline = online && hasActiveDelivery;
 
   return (
     <Card className="flex items-center justify-between">
@@ -81,11 +92,17 @@ export default function RiderAvailability({
           </Badge>
         </p>
         <p className="mt-1 text-sm text-gray-600">
-          Go online to be auto-assigned nearby orders. We share your location
-          only while you&apos;re online.
+          {cannotGoOffline
+            ? "You have an active delivery — finish it before going offline."
+            : "Go online to be auto-assigned nearby orders. We share your location only while you’re online."}
         </p>
       </div>
-      <Button variant={online ? "secondary" : "primary"} loading={busy} onClick={toggle}>
+      <Button
+        variant={online ? "secondary" : "primary"}
+        loading={busy}
+        disabled={cannotGoOffline}
+        onClick={toggle}
+      >
         {online ? "Go offline" : "Go online"}
       </Button>
     </Card>

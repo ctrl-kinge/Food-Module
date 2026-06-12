@@ -86,7 +86,10 @@ export default async function RiderOrdersPage() {
         subtitle="Go online to get auto-assigned the nearest ready orders."
       />
       <div className="mt-6">
-        <RiderAvailability initialOnline={me?.isOnline ?? false} />
+        <RiderAvailability
+          initialOnline={me?.isOnline ?? false}
+          hasActiveDelivery={mine.length > 0}
+        />
       </div>
 
       <section className="mt-6">
