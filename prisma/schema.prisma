@@ -25,8 +25,10 @@ model User {
   lastLng     Float?
   orders      Order[]  @relation("CustomerOrders")
   riderOrders     Order[]     @relation("RiderOrders")
-  ownedRestaurant Restaurant? @relation("RestaurantOwner")
-  reviews         Review[]
+  ownedRestaurant   Restaurant?        @relation("RestaurantOwner")
+  reviews           Review[]
+  notifications     Notification[]
+  pushSubscriptions PushSubscription[]
   createdAt   DateTime @default(now())
 }
 
@@ -130,4 +132,35 @@ model Review {
   riderRating      Int // 1-5
   comment          String?
   createdAt        DateTime   @default(now())
+}
+
+enum NotificationType {
+  ORDER_STATUS
+  NEW_ORDER
+  ASSIGNED
+  REVIEW
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
+  type      NotificationType
+  title     String
+  body      String
+  orderId   String?
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  @@index([userId, read])
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
 }
