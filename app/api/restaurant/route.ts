@@ -9,7 +9,10 @@ const schema = z.object({ isOpen: z.boolean() });
 
 export async function PATCH(req: Request) {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "RESTAURANT") {
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (session.user.role !== "RESTAURANT") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const restaurant = await getOwnedRestaurant(session.user.id);
@@ -19,7 +22,10 @@ export async function PATCH(req: Request) {
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid input", details: parsed.error.flatten().fieldErrors },
+      { status: 400 },
+    );
   }
   const updated = await prisma.restaurant.update({
     where: { id: restaurant.id },

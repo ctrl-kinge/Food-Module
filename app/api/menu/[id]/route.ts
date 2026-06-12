@@ -2,14 +2,13 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { menuItemUpdateSchema, getOwnedRestaurant } from "@/lib/menu";
+import { menuItemUpdateSchema } from "@/lib/menu";
 
+/** Returns the item only if it belongs to a restaurant owned by this user. */
 async function ownItem(userId: string, itemId: string) {
-  const restaurant = await getOwnedRestaurant(userId);
-  if (!restaurant) return null;
-  const item = await prisma.menuItem.findUnique({ where: { id: itemId } });
-  if (!item || item.restaurantId !== restaurant.id) return null;
-  return item;
+  return prisma.menuItem.findFirst({
+    where: { id: itemId, restaurant: { ownerId: userId } },
+  });
 }
 
 export async function PATCH(
@@ -17,7 +16,10 @@ export async function PATCH(
   { params }: { params: { id: string } },
 ) {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "RESTAURANT") {
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (session.user.role !== "RESTAURANT") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const owned = await ownItem(session.user.id, params.id);
@@ -34,11 +36,18 @@ export async function PATCH(
     );
   }
 
-  const item = await prisma.menuItem.update({
-    where: { id: params.id },
-    data: parsed.data,
-  });
-  return NextResponse.json(item);
+  try {
+    const item = await prisma.menuItem.update({
+      where: { id: params.id },
+      data: parsed.data,
+    });
+    return NextResponse.json(item);
+  } catch (e) {
+    if ((e as { code?: string }).code === "P2025") {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+    throw e;
+  }
 }
 
 export async function DELETE(
@@ -46,13 +55,24 @@ export async function DELETE(
   { params }: { params: { id: string } },
 ) {
   const session = await getServerSession(authOptions);
-  if (session?.user?.role !== "RESTAURANT") {
+  if (!session?.user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (session.user.role !== "RESTAURANT") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const owned = await ownItem(session.user.id, params.id);
   if (!owned) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
-  await prisma.menuItem.delete({ where: { id: params.id } });
-  return NextResponse.json({ ok: true });
+
+  try {
+    await prisma.menuItem.delete({ where: { id: params.id } });
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    if ((e as { code?: string }).code === "P2025") {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+    throw e;
+  }
 }
