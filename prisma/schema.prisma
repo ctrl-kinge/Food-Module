@@ -20,6 +20,9 @@ model User {
   name        String
   role        Role     @default(CUSTOMER)
   phone       String?
+  isOnline    Boolean  @default(false)
+  lastLat     Float?
+  lastLng     Float?
   orders      Order[]  @relation("CustomerOrders")
   riderOrders     Order[]     @relation("RiderOrders")
   ownedRestaurant Restaurant? @relation("RestaurantOwner")
@@ -79,9 +82,11 @@ model Order {
   destAddress String
 
   // live rider position (updated in realtime)
-  riderLat   Float?
-  riderLng   Float?
-  etaSeconds Int?
+  riderLat     Float?
+  riderLng     Float?
+  etaSeconds   Int?
+  prepMinutes  Int?
+  cancelReason String?
 
   subtotalCents      Int
   riderTipCents      Int    @default(0)
