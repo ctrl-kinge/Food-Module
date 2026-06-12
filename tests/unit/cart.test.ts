@@ -53,3 +53,26 @@ describe("cart store", () => {
     expect(s.restaurantId).toBeNull();
   });
 });
+
+describe("replaceCart", () => {
+  beforeEach(() => {
+    useCart.getState().clear();
+  });
+
+  it("replaces the whole cart with a restaurant + items wholesale", () => {
+    useCart.getState().addItem("r1", "Old Place", {
+      menuItemId: "x",
+      name: "X",
+      priceCents: 100,
+    });
+    useCart.getState().replaceCart("r2", "New Place", [
+      { menuItemId: "a", name: "A", priceCents: 500, qty: 2 },
+      { menuItemId: "b", name: "B", priceCents: 300, qty: 1 },
+    ]);
+    const s = useCart.getState();
+    expect(s.restaurantId).toBe("r2");
+    expect(s.restaurantName).toBe("New Place");
+    expect(s.items).toHaveLength(2);
+    expect(s.items.find((i) => i.menuItemId === "a")?.qty).toBe(2);
+  });
+});

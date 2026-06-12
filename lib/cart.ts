@@ -25,6 +25,12 @@ type CartState = {
     restaurantName: string,
     item: Omit<CartItem, "qty">,
   ) => void;
+  /** Replace the entire cart with a restaurant + a full set of items (reorder). */
+  replaceCart: (
+    restaurantId: string,
+    restaurantName: string,
+    items: CartItem[],
+  ) => void;
   setQty: (menuItemId: string, qty: number) => void;
   removeItem: (menuItemId: string) => void;
   clear: () => void;
@@ -52,6 +58,14 @@ export const useCart = create<CartState>()(
 
       startNewCart: (restaurantId, restaurantName, item) => {
         set({ restaurantId, restaurantName, items: [{ ...item, qty: 1 }] });
+      },
+
+      replaceCart: (restaurantId, restaurantName, items) => {
+        set({
+          restaurantId,
+          restaurantName,
+          items: items.map((i) => ({ ...i })),
+        });
       },
 
       setQty: (menuItemId, qty) => {
