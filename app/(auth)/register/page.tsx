@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ROLE_HOME, SELF_SIGNUP_ROLES, type SignupRole } from "@/lib/roles";
+import { Card, Button } from "@/components/ui";
 
 const ROLE_LABELS: Record<SignupRole, string> = {
   CUSTOMER: "Customer — order food",
@@ -67,84 +68,82 @@ export default function RegisterPage() {
         <p className="mt-1 text-sm text-gray-600">Pick the role you need.</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Name
-          <input
-            type="text"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-orange-500"
-            autoComplete="name"
-          />
-        </label>
+      <Card>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <label className="flex flex-col gap-1 text-sm font-medium">
+            Name
+            <input
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              autoComplete="name"
+            />
+          </label>
 
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Email
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-orange-500"
-            autoComplete="email"
-          />
-        </label>
+          <label className="flex flex-col gap-1 text-sm font-medium">
+            Email
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              autoComplete="email"
+            />
+          </label>
 
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Password
-          <input
-            type="password"
-            required
-            minLength={6}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-orange-500"
-            autoComplete="new-password"
-          />
-        </label>
+          <label className="flex flex-col gap-1 text-sm font-medium">
+            Password
+            <input
+              type="password"
+              required
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              autoComplete="new-password"
+            />
+          </label>
 
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Phone (optional)
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-orange-500"
-            autoComplete="tel"
-          />
-        </label>
+          <label className="flex flex-col gap-1 text-sm font-medium">
+            Phone (optional)
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              autoComplete="tel"
+            />
+          </label>
 
-        <label className="flex flex-col gap-1 text-sm font-medium">
-          Role
-          <select
-            value={role}
-            onChange={(e) => setRole(e.target.value as SignupRole)}
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-orange-500"
-          >
-            {SELF_SIGNUP_ROLES.map((r) => (
-              <option key={r} value={r}>
-                {ROLE_LABELS[r]}
-              </option>
-            ))}
-          </select>
-        </label>
+          <label className="flex flex-col gap-1 text-sm font-medium">
+            Role
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value as SignupRole)}
+              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+            >
+              {SELF_SIGNUP_ROLES.map((r) => (
+                <option key={r} value={r}>
+                  {ROLE_LABELS[r]}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="rounded-md bg-orange-600 px-4 py-2 font-medium text-white transition hover:bg-orange-700 disabled:opacity-60"
-        >
-          {loading ? "Creating…" : "Create account"}
-        </button>
-      </form>
+          <Button type="submit" loading={loading}>
+            {loading ? "Creating…" : "Create account"}
+          </Button>
+        </form>
+      </Card>
 
       <p className="text-sm text-gray-600">
         Already have an account?{" "}
-        <Link href="/login" className="text-orange-600 underline">
+        <Link href="/login" className="text-brand-600 underline">
           Log in
         </Link>
       </p>

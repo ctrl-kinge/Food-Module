@@ -9,6 +9,7 @@ import { useHasMounted } from "@/lib/useHasMounted";
 import { toast } from "@/lib/toast";
 import { getSocket } from "@/lib/socket-client";
 import AddressPicker, { type DeliveryAddress } from "@/components/AddressPicker";
+import { Card, Button } from "@/components/ui";
 
 export default function CheckoutPage() {
   const mounted = useHasMounted();
@@ -28,7 +29,7 @@ export default function CheckoutPage() {
         <p className="text-gray-600">Your cart is empty.</p>
         <Link
           href="/restaurants"
-          className="mt-4 inline-block rounded-md bg-orange-600 px-4 py-2 font-medium text-white hover:bg-orange-700"
+          className="mt-4 inline-block rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700"
         >
           Browse restaurants
         </Link>
@@ -85,7 +86,7 @@ export default function CheckoutPage() {
         Ordering from <span className="font-medium">{cart.restaurantName}</span>
       </p>
 
-      <section className="mt-6 rounded-xl border border-gray-200 p-4">
+      <Card className="mt-6">
         <h2 className="font-semibold">Your order</h2>
         <ul className="mt-3 divide-y divide-gray-100">
           {cart.items.map((i) => (
@@ -95,7 +96,7 @@ export default function CheckoutPage() {
                   type="button"
                   aria-label={`Remove one ${i.name}`}
                   onClick={() => cart.setQty(i.menuItemId, i.qty - 1)}
-                  className="h-7 w-7 rounded-md border border-gray-300 text-lg leading-none hover:border-orange-500"
+                  className="h-7 w-7 rounded-md border border-gray-300 text-lg leading-none hover:border-brand-500"
                 >
                   −
                 </button>
@@ -104,7 +105,7 @@ export default function CheckoutPage() {
                   type="button"
                   aria-label={`Add one ${i.name}`}
                   onClick={() => cart.setQty(i.menuItemId, i.qty + 1)}
-                  className="h-7 w-7 rounded-md border border-gray-300 text-lg leading-none hover:border-orange-500"
+                  className="h-7 w-7 rounded-md border border-gray-300 text-lg leading-none hover:border-brand-500"
                 >
                   +
                 </button>
@@ -120,27 +121,28 @@ export default function CheckoutPage() {
           <span>Subtotal</span>
           <span>{formatPrice(cartSubtotal(cart.items))}</span>
         </div>
-      </section>
+      </Card>
 
-      <section className="mt-6 rounded-xl border border-gray-200 p-4">
+      <Card className="mt-6">
         <h2 className="font-semibold">Delivery location</h2>
         <div className="mt-3">
           <AddressPicker onChange={setAddr} />
         </div>
-      </section>
+      </Card>
 
       {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
 
-      <button
+      <Button
         type="button"
         onClick={placeOrder}
         disabled={!addressValid || placing}
-        className="mt-6 w-full rounded-md bg-orange-600 px-4 py-3 font-medium text-white transition hover:bg-orange-700 disabled:opacity-60"
+        loading={placing}
+        className="mt-6 w-full py-3"
       >
         {placing
           ? "Placing order…"
           : `Place order · ${formatPrice(cartSubtotal(cart.items))}`}
-      </button>
+      </Button>
       {!addressValid && (
         <p className="mt-2 text-center text-xs text-gray-500">
           Choose a delivery location to continue.
