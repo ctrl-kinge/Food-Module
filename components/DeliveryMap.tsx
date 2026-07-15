@@ -44,18 +44,18 @@ function MapboxMap({
       mapboxgl.accessToken = token;
       const map = new mapboxgl.Map({
         container: containerRef.current,
-        style: "mapbox://styles/mapbox/streets-v12",
+        style: "mapbox://styles/mapbox/dark-v11",
         center: [pickup.lng, pickup.lat],
         zoom: 12,
       });
       mapRef.current = map;
 
       map.on("load", () => {
-        new mapboxgl.Marker({ color: "#2563eb" })
+        new mapboxgl.Marker({ color: "#8fb4e3" })
           .setLngLat([pickup.lng, pickup.lat])
           .setPopup(new mapboxgl.Popup().setText(pickup.label))
           .addTo(map);
-        new mapboxgl.Marker({ color: "#16a34a" })
+        new mapboxgl.Marker({ color: "#6fbf8f" })
           .setLngLat([dest.lng, dest.lat])
           .setPopup(new mapboxgl.Popup().setText(dest.label))
           .addTo(map);
@@ -82,7 +82,7 @@ function MapboxMap({
       const mapboxgl = (await import("mapbox-gl")).default;
       if (!mapRef.current) return;
       if (!riderMarkerRef.current) {
-        riderMarkerRef.current = new mapboxgl.Marker({ color: "#ea580c" })
+        riderMarkerRef.current = new mapboxgl.Marker({ color: "#e8b04b" })
           .setLngLat([rider.lng, rider.lat])
           .addTo(mapRef.current);
       } else {
@@ -128,12 +128,12 @@ function FallbackMap({ pickup, dest, rider }: DeliveryMapProps) {
   const d = project(dest);
   const r = rider ? project(rider) : null;
 
-  const COLORS = { pickup: "#2563eb", dest: "#16a34a", rider: "#ea580c" };
+  const COLORS = { pickup: "#8fb4e3", dest: "#6fbf8f", rider: "#e8b04b" };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-surface-border bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="overflow-hidden rounded-xl border border-surface-border bg-gradient-to-br from-surface to-surface-raised">
       <svg viewBox="0 0 100 100" className="h-64 w-full" role="img" aria-label="Delivery map preview">
-        <line x1={p.x} y1={p.y} x2={d.x} y2={d.y} stroke="#cbd5e1" strokeWidth={0.6} strokeDasharray="2 2" />
+        <line x1={p.x} y1={p.y} x2={d.x} y2={d.y} stroke="#4a453c" strokeWidth={0.6} strokeDasharray="2 2" />
         {r && (
           <line x1={r.x} y1={r.y} x2={d.x} y2={d.y} stroke={COLORS.rider} strokeWidth={0.8} />
         )}
@@ -148,7 +148,7 @@ function FallbackMap({ pickup, dest, rider }: DeliveryMapProps) {
                 <animate attributeName="r" values="3;6;3" dur="1.5s" repeatCount="indefinite" />
               </circle>
             )}
-            <circle cx={m.pt.x} cy={m.pt.y} r={2.2} fill={COLORS[m.kind]} stroke="white" strokeWidth={0.6} />
+            <circle cx={m.pt.x} cy={m.pt.y} r={2.2} fill={COLORS[m.kind]} stroke="#131210" strokeWidth={0.6} />
           </g>
         ))}
       </svg>
