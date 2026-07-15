@@ -131,7 +131,7 @@ function FallbackMap({ pickup, dest, rider }: DeliveryMapProps) {
   const COLORS = { pickup: "#2563eb", dest: "#16a34a", rider: "#ea580c" };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="overflow-hidden rounded-xl border border-surface-border bg-gradient-to-br from-slate-50 to-slate-100">
       <svg viewBox="0 0 100 100" className="h-64 w-full" role="img" aria-label="Delivery map preview">
         <line x1={p.x} y1={p.y} x2={d.x} y2={d.y} stroke="#cbd5e1" strokeWidth={0.6} strokeDasharray="2 2" />
         {r && (
@@ -152,11 +152,11 @@ function FallbackMap({ pickup, dest, rider }: DeliveryMapProps) {
           </g>
         ))}
       </svg>
-      <div className="flex flex-wrap gap-3 border-t border-gray-200 px-3 py-2 text-xs">
+      <div className="flex flex-wrap gap-3 border-t border-surface-border px-3 py-2 text-xs">
         <Legend color={COLORS.pickup} label={`Pickup · ${pickup.label}`} />
         <Legend color={COLORS.dest} label={`Drop-off · ${dest.label}`} />
         {rider && <Legend color={COLORS.rider} label="Rider" />}
-        <span className="ml-auto text-gray-400">Map preview — add a Mapbox token for a full map</span>
+        <span className="ml-auto text-ink-faint">Map preview — add a Mapbox token for a full map</span>
       </div>
     </div>
   );
@@ -164,7 +164,7 @@ function FallbackMap({ pickup, dest, rider }: DeliveryMapProps) {
 
 function Legend({ color, label }: { color: string; label: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-gray-600">
+    <span className="inline-flex items-center gap-1.5 text-ink-secondary">
       <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
       {label}
     </span>

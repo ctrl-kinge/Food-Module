@@ -19,7 +19,7 @@ export default async function ActiveOrderBanner({
   return (
     <Link
       href={`/orders/${active.id}`}
-      className="block bg-orange-600 text-white transition hover:bg-orange-700"
+      className="block bg-brand-600 text-surface-deep transition hover:bg-brand-700"
     >
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-6 py-2 text-sm">
         <span>

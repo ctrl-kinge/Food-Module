@@ -95,7 +95,7 @@ export default function MenuManager({
               {open ? "Accepting orders" : "Not accepting orders"}
             </Badge>
           </p>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-ink-secondary">
             Customers can only order when your restaurant is open.
           </p>
         </div>
@@ -169,7 +169,7 @@ export default function MenuManager({
       <div className="space-y-3">
         <h2 className="font-semibold">Your menu ({items.length})</h2>
         {items.length === 0 ? (
-          <p className="text-sm text-gray-600">No items yet.</p>
+          <p className="text-sm text-ink-secondary">No items yet.</p>
         ) : (
           <ul className="space-y-2">
             {items.map((item) => (
@@ -182,7 +182,7 @@ export default function MenuManager({
                         <Badge tone="neutral">Unavailable</Badge>
                       )}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-ink-secondary">
                       {formatPrice(item.priceCents)}
                       {item.category ? ` · ${item.category}` : ""}
                     </p>

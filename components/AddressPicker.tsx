@@ -208,17 +208,17 @@ function MapPicker({
 
   return (
     <div className="space-y-3">
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-ink-secondary">
         Drag the pin or tap the map to set your exact delivery spot.
       </p>
 
       <div
         ref={containerRef}
-        className="h-64 w-full overflow-hidden rounded-xl border border-gray-200"
+        className="h-64 w-full overflow-hidden rounded-xl border border-surface-border"
       />
 
       {selected && (
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-ink-secondary">
           <span className="font-medium">Delivering to:</span> {selected.address}
         </p>
       )}
@@ -235,12 +235,12 @@ function MapPicker({
             }}
             onFocus={() => results.length > 0 && setOpen(true)}
             placeholder="Start typing a street, place, or area…"
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-brand-500"
+            className="rounded-md border border-surface-border px-3 py-2 font-normal outline-none focus:border-brand-500"
             autoComplete="off"
           />
         </label>
         {open && results.length > 0 && (
-          <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-gray-200 bg-white shadow-lg">
+          <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-surface-border bg-surface shadow-lg">
             {results.map((f) => (
               <li key={f.id}>
                 <button
@@ -269,7 +269,7 @@ function MapPicker({
               className={`rounded-full border px-3 py-1 text-sm transition ${
                 selected?.address === p.address
                   ? "border-brand-500 bg-brand-50 text-brand-700"
-                  : "border-gray-300 hover:border-brand-500"
+                  : "border-surface-border hover:border-brand-500"
               }`}
             >
               {p.label}
@@ -323,7 +323,7 @@ function FallbackPicker({
                 className={`rounded-full border px-3 py-1 text-sm transition ${
                   selected
                     ? "border-brand-500 bg-brand-50 text-brand-700"
-                    : "border-gray-300 hover:border-brand-500"
+                    : "border-surface-border hover:border-brand-500"
                 }`}
               >
                 {p.label}
@@ -340,7 +340,7 @@ function FallbackPicker({
           value={address}
           onChange={(e) => sync({ address: e.target.value })}
           placeholder="Street, building, area"
-          className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-brand-500"
+          className="rounded-md border border-surface-border px-3 py-2 font-normal outline-none focus:border-brand-500"
         />
       </label>
 
@@ -353,7 +353,7 @@ function FallbackPicker({
             value={lat}
             onChange={(e) => sync({ lat: e.target.value })}
             placeholder="-1.2841"
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-brand-500"
+            className="rounded-md border border-surface-border px-3 py-2 font-normal outline-none focus:border-brand-500"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm font-medium">
@@ -364,11 +364,11 @@ function FallbackPicker({
             value={lng}
             onChange={(e) => sync({ lng: e.target.value })}
             placeholder="36.8233"
-            className="rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-brand-500"
+            className="rounded-md border border-surface-border px-3 py-2 font-normal outline-none focus:border-brand-500"
           />
         </label>
       </div>
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-ink-muted">
         Pick a location above or enter coordinates. (An interactive map appears
         here when a Mapbox token is configured.)
       </p>

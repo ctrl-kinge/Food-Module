@@ -7,12 +7,12 @@ export default function NotFound() {
         404
       </p>
       <h1 className="text-2xl font-bold">Page not found</h1>
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-ink-secondary">
         That page doesn&rsquo;t exist, or you don&rsquo;t have access to it.
       </p>
       <Link
         href="/"
-        className="rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700"
+        className="rounded-md bg-brand-600 px-4 py-2 font-medium text-surface-deep hover:bg-brand-700"
       >
         Go home
       </Link>

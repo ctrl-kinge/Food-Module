@@ -41,7 +41,7 @@ export default async function RiderOrderDetailPage({
         <h1 className="text-2xl font-bold">Delivery #{order.id.slice(-6)}</h1>
         <StatusBadge status={order.status} />
       </div>
-      <p className="mt-1 text-sm text-gray-600">
+      <p className="mt-1 text-sm text-ink-secondary">
         Pickup <span className="font-medium">{order.restaurant.name}</span> →
         drop-off {order.destAddress}
       </p>
@@ -50,7 +50,7 @@ export default async function RiderOrderDetailPage({
         <DeliveryMap pickup={pickup} dest={dest} />
       </div>
 
-      <section className="mt-6 rounded-xl border border-gray-200 p-4">
+      <section className="mt-6 rounded-xl border border-surface-border p-4">
         <h2 className="font-semibold">Update status</h2>
         <div className="mt-3">
           <OrderAdvanceControls
@@ -59,7 +59,7 @@ export default async function RiderOrderDetailPage({
             showCancel={false}
           />
         </div>
-        <p className="mt-2 text-xs text-gray-500">
+        <p className="mt-2 text-xs text-ink-muted">
           Mark <em>Picked up</em> at the restaurant, <em>En route</em> when
           driving, and <em>Delivered</em> on arrival.
         </p>
@@ -73,9 +73,9 @@ export default async function RiderOrderDetailPage({
         />
       </div>
 
-      <section className="mt-6 rounded-xl border border-gray-200 p-4">
+      <section className="mt-6 rounded-xl border border-surface-border p-4">
         <h2 className="font-semibold">Order</h2>
-        <ul className="mt-3 divide-y divide-gray-100">
+        <ul className="mt-3 divide-y divide-surface-border">
           {order.items.map((i) => (
             <li key={i.id} className="flex justify-between py-2 text-sm">
               <span>
@@ -85,7 +85,7 @@ export default async function RiderOrderDetailPage({
             </li>
           ))}
         </ul>
-        <div className="mt-3 flex justify-between border-t border-gray-200 pt-3 font-semibold">
+        <div className="mt-3 flex justify-between border-t border-surface-border pt-3 font-semibold">
           <span>Subtotal</span>
           <span>{formatPrice(order.subtotalCents)}</span>
         </div>

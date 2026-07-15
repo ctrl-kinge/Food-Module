@@ -21,16 +21,16 @@ export default function CheckoutPage() {
   const [placing, setPlacing] = useState(false);
 
   if (!mounted) {
-    return <div className="mx-auto max-w-3xl px-6 py-10 text-gray-600">Loading…</div>;
+    return <div className="mx-auto max-w-3xl px-6 py-10 text-ink-secondary">Loading…</div>;
   }
 
   if (cart.items.length === 0) {
     return (
       <div className="mx-auto max-w-3xl px-6 py-16 text-center">
-        <p className="text-gray-600">Your cart is empty.</p>
+        <p className="text-ink-secondary">Your cart is empty.</p>
         <Link
           href="/restaurants"
-          className="mt-4 inline-block rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700"
+          className="mt-4 inline-block rounded-md bg-brand-600 px-4 py-2 font-medium text-surface-deep hover:bg-brand-700"
         >
           Browse restaurants
         </Link>
@@ -83,13 +83,13 @@ export default function CheckoutPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-8">
       <h1 className="text-2xl font-bold">Checkout</h1>
-      <p className="mt-1 text-sm text-gray-600">
+      <p className="mt-1 text-sm text-ink-secondary">
         Ordering from <span className="font-medium">{cart.restaurantName}</span>
       </p>
 
       <Card className="mt-6">
         <h2 className="font-semibold">Your order</h2>
-        <ul className="mt-3 divide-y divide-gray-100">
+        <ul className="mt-3 divide-y divide-surface-border">
           {cart.items.map((i) => (
             <li key={i.menuItemId} className="flex items-center justify-between gap-3 py-2">
               <div className="flex items-center gap-2">
@@ -97,7 +97,7 @@ export default function CheckoutPage() {
                   type="button"
                   aria-label={`Remove one ${i.name}`}
                   onClick={() => cart.setQty(i.menuItemId, i.qty - 1)}
-                  className="h-7 w-7 rounded-md border border-gray-300 text-lg leading-none hover:border-brand-500"
+                  className="h-7 w-7 rounded-md border border-surface-border text-lg leading-none hover:border-brand-500"
                 >
                   −
                 </button>
@@ -106,7 +106,7 @@ export default function CheckoutPage() {
                   type="button"
                   aria-label={`Add one ${i.name}`}
                   onClick={() => cart.setQty(i.menuItemId, i.qty + 1)}
-                  className="h-7 w-7 rounded-md border border-gray-300 text-lg leading-none hover:border-brand-500"
+                  className="h-7 w-7 rounded-md border border-surface-border text-lg leading-none hover:border-brand-500"
                 >
                   +
                 </button>
@@ -118,7 +118,7 @@ export default function CheckoutPage() {
             </li>
           ))}
         </ul>
-        <div className="mt-3 flex justify-between border-t border-gray-200 pt-3 font-semibold">
+        <div className="mt-3 flex justify-between border-t border-surface-border pt-3 font-semibold">
           <span>Subtotal</span>
           <span>{formatPrice(cartSubtotal(cart.items))}</span>
         </div>
@@ -148,7 +148,7 @@ export default function CheckoutPage() {
           : `Place order · ${formatPrice(cartSubtotal(cart.items))}`}
       </Button>
       {!addressValid && (
-        <p className="mt-2 text-center text-xs text-gray-500">
+        <p className="mt-2 text-center text-xs text-ink-muted">
           Choose a delivery location to continue.
         </p>
       )}

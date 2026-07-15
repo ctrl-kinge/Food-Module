@@ -52,7 +52,7 @@ export default function OrderAdvanceControls({
     return <span className="text-sm font-medium text-green-700">Completed</span>;
   }
   if (status === "CANCELLED") {
-    return <span className="text-sm text-gray-500">Cancelled</span>;
+    return <span className="text-sm text-ink-muted">Cancelled</span>;
   }
 
   return (

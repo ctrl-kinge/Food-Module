@@ -21,7 +21,7 @@ export default function StarRating({
             aria-label={`${n} star${n > 1 ? "s" : ""}`}
             className="text-2xl leading-none"
           >
-            <span className={n <= value ? "text-amber-500" : "text-gray-300"}>
+            <span className={n <= value ? "text-amber-500" : "text-ink-faint"}>
               ★
             </span>
           </button>

@@ -17,13 +17,13 @@ export default function Error({
   return (
     <main id="main-content" className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center gap-4 px-6 text-center">
       <h1 className="text-2xl font-bold">Something went wrong</h1>
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-ink-secondary">
         An unexpected error occurred. Please try again.
       </p>
       <button
         type="button"
         onClick={reset}
-        className="rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700"
+        className="rounded-md bg-brand-600 px-4 py-2 font-medium text-surface-deep hover:bg-brand-700"
       >
         Try again
       </button>

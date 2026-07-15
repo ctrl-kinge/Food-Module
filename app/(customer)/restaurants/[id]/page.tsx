@@ -28,11 +28,11 @@ export default async function RestaurantDetailPage({
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-8">
-      <Link href="/restaurants" className="text-sm text-orange-600 underline">
+      <Link href="/restaurants" className="text-sm text-brand-600 underline">
         &larr; All restaurants
       </Link>
       <h1 className="mt-2 text-2xl font-bold">{restaurant.name}</h1>
-      <p className="mt-1 text-sm text-gray-600">{restaurant.address}</p>
+      <p className="mt-1 text-sm text-ink-secondary">{restaurant.address}</p>
       <div className="mt-2">
         <Rating
           rating={restaurant.avgRating}
@@ -47,7 +47,7 @@ export default async function RestaurantDetailPage({
       )}
 
       {restaurant.menu.length === 0 ? (
-        <p className="mt-8 text-gray-600">No items available right now.</p>
+        <p className="mt-8 text-ink-secondary">No items available right now.</p>
       ) : (
         <MenuList
           restaurantId={restaurant.id}
@@ -68,11 +68,11 @@ export default async function RestaurantDetailPage({
           {restaurant._count.reviews > 0 && ` (${restaurant._count.reviews})`}
         </h2>
         {restaurant.reviews.length === 0 ? (
-          <p className="mt-2 text-sm text-gray-600">No reviews yet.</p>
+          <p className="mt-2 text-sm text-ink-secondary">No reviews yet.</p>
         ) : (
           <ul className="mt-3 space-y-3">
             {restaurant.reviews.map((rv) => (
-              <li key={rv.id} className="rounded-xl border border-gray-200 p-4">
+              <li key={rv.id} className="rounded-xl border border-surface-border p-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">{rv.customer.name}</span>
                   <span
@@ -80,15 +80,15 @@ export default async function RestaurantDetailPage({
                     aria-label={`${rv.restaurantRating} of 5`}
                   >
                     {"★".repeat(rv.restaurantRating)}
-                    <span className="text-gray-300">
+                    <span className="text-ink-faint">
                       {"★".repeat(5 - rv.restaurantRating)}
                     </span>
                   </span>
                 </div>
                 {rv.comment && (
-                  <p className="mt-2 text-sm text-gray-700">{rv.comment}</p>
+                  <p className="mt-2 text-sm text-ink-secondary">{rv.comment}</p>
                 )}
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-ink-faint">
                   {new Date(rv.createdAt).toLocaleDateString("en-US")}
                 </p>
               </li>

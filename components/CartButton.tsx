@@ -12,11 +12,11 @@ export default function CartButton() {
   return (
     <Link
       href="/checkout"
-      className="inline-flex items-center gap-1 rounded-md border border-gray-300 px-3 py-1.5 hover:border-orange-500"
+      className="inline-flex items-center gap-1 rounded-md border border-surface-border px-3 py-1.5 hover:border-brand-500"
     >
       Cart
       {count > 0 && (
-        <span className="ml-1 rounded-full bg-orange-600 px-1.5 text-xs font-semibold text-white">
+        <span className="ml-1 rounded-full bg-brand-600 px-1.5 text-xs font-semibold text-surface-deep">
           {count}
         </span>
       )}

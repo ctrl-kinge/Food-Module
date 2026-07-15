@@ -29,8 +29,8 @@ function TipChooser({
             onClick={() => onChange(cents)}
             className={`rounded-full border px-3 py-1 text-sm transition ${
               value === cents
-                ? "border-orange-500 bg-orange-50 text-orange-700"
-                : "border-gray-300 hover:border-orange-500"
+                ? "border-brand-500 bg-brand-50 text-brand-700"
+                : "border-surface-border hover:border-brand-500"
             }`}
           >
             {cents === 0 ? "No tip" : formatPrice(cents)}
@@ -46,7 +46,7 @@ function TipChooser({
             const dollars = parseFloat(e.target.value);
             onChange(Number.isFinite(dollars) ? Math.round(dollars * 100) : 0);
           }}
-          className="w-24 rounded-md border border-gray-300 px-2 py-1 text-sm outline-none focus:border-orange-500"
+          className="w-24 rounded-md border border-surface-border px-2 py-1 text-sm outline-none focus:border-brand-500"
         />
       </div>
     </div>
@@ -88,7 +88,7 @@ export default function ReviewTipPanel({ orderId }: { orderId: string }) {
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 p-4">
+    <div className="rounded-xl border border-surface-border p-4">
       <h2 className="font-semibold">Rate your delivery</h2>
 
       <div className="mt-4 grid gap-5 sm:grid-cols-2">
@@ -124,7 +124,7 @@ export default function ReviewTipPanel({ orderId }: { orderId: string }) {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={3}
-          className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 font-normal outline-none focus:border-orange-500"
+          className="mt-1 w-full rounded-md border border-surface-border px-3 py-2 font-normal outline-none focus:border-brand-500"
           placeholder="How was it?"
         />
       </label>
@@ -135,7 +135,7 @@ export default function ReviewTipPanel({ orderId }: { orderId: string }) {
         type="button"
         onClick={submit}
         disabled={submitting}
-        className="mt-4 w-full rounded-md bg-orange-600 px-4 py-2.5 font-medium text-white hover:bg-orange-700 disabled:opacity-60"
+        className="mt-4 w-full rounded-md bg-brand-600 px-4 py-2.5 font-medium text-surface-deep hover:bg-brand-700 disabled:opacity-60"
       >
         {submitting ? "Submitting…" : "Submit review & tips"}
       </button>

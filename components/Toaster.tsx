@@ -5,7 +5,7 @@ import { useToasts, type ToastType } from "@/lib/toast";
 const STYLES: Record<ToastType, string> = {
   success: "border-green-200 bg-green-50 text-green-800",
   error: "border-red-200 bg-red-50 text-red-800",
-  info: "border-gray-200 bg-white text-gray-800",
+  info: "border-surface-border bg-surface text-ink",
 };
 
 export default function Toaster() {

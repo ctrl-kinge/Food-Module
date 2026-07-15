@@ -65,7 +65,7 @@ export default function RegisterPage() {
     <main id="main-content" className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-6 px-6 py-16">
       <div>
         <h1 className="text-3xl font-bold">Create account</h1>
-        <p className="mt-1 text-sm text-gray-600">Pick the role you need.</p>
+        <p className="mt-1 text-sm text-ink-secondary">Pick the role you need.</p>
       </div>
 
       <Card>
@@ -77,7 +77,7 @@ export default function RegisterPage() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              className="block w-full rounded-md border border-surface-border px-3 py-2 text-sm focus-visible:border-brand-500"
               autoComplete="name"
             />
           </label>
@@ -89,7 +89,7 @@ export default function RegisterPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              className="block w-full rounded-md border border-surface-border px-3 py-2 text-sm focus-visible:border-brand-500"
               autoComplete="email"
             />
           </label>
@@ -102,7 +102,7 @@ export default function RegisterPage() {
               minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              className="block w-full rounded-md border border-surface-border px-3 py-2 text-sm focus-visible:border-brand-500"
               autoComplete="new-password"
             />
           </label>
@@ -113,7 +113,7 @@ export default function RegisterPage() {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              className="block w-full rounded-md border border-surface-border px-3 py-2 text-sm focus-visible:border-brand-500"
               autoComplete="tel"
             />
           </label>
@@ -123,7 +123,7 @@ export default function RegisterPage() {
             <select
               value={role}
               onChange={(e) => setRole(e.target.value as SignupRole)}
-              className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500"
+              className="block w-full rounded-md border border-surface-border px-3 py-2 text-sm focus-visible:border-brand-500"
             >
               {SELF_SIGNUP_ROLES.map((r) => (
                 <option key={r} value={r}>
@@ -141,7 +141,7 @@ export default function RegisterPage() {
         </form>
       </Card>
 
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-ink-secondary">
         Already have an account?{" "}
         <Link href="/login" className="text-brand-600 underline">
           Log in

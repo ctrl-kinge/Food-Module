@@ -9,7 +9,7 @@ const STATUS_COLORS: Record<OrderStatus, string> = {
   PICKED_UP: "bg-purple-100 text-purple-800",
   EN_ROUTE: "bg-purple-100 text-purple-800",
   DELIVERED: "bg-green-100 text-green-800",
-  CANCELLED: "bg-gray-200 text-gray-700",
+  CANCELLED: "bg-surface-raised text-ink-secondary",
 };
 
 export default function StatusBadge({ status }: { status: OrderStatus }) {

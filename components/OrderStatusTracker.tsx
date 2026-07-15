@@ -89,13 +89,13 @@ export default function OrderStatusTracker({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-xl border border-gray-200 p-4">
+      <div className="rounded-xl border border-surface-border p-4">
         <div className="flex items-center justify-between">
           <StatusBadge status={status} />
-          <span className="flex items-center gap-1.5 text-xs text-gray-500">
+          <span className="flex items-center gap-1.5 text-xs text-ink-muted">
             <span
               className={`inline-block h-2 w-2 rounded-full ${
-                live ? "bg-green-500" : "bg-gray-300"
+                live ? "bg-green-500" : "bg-ink-faint"
               }`}
             />
             {live ? "Live" : "Connecting…"}
@@ -103,7 +103,7 @@ export default function OrderStatusTracker({
         </div>
 
         {status === "CANCELLED" ? (
-          <p className="mt-4 text-sm text-gray-600">This order was cancelled.</p>
+          <p className="mt-4 text-sm text-ink-secondary">This order was cancelled.</p>
         ) : (
           <ol className="mt-4 space-y-2">
             {STATUS_FLOW.map((s, i) => {
@@ -114,10 +114,10 @@ export default function OrderStatusTracker({
                   <span
                     className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs ${
                       active
-                        ? "bg-orange-600 text-white"
+                        ? "bg-brand-600 text-surface-deep"
                         : done
-                          ? "bg-orange-200 text-orange-800"
-                          : "bg-gray-200 text-gray-500"
+                          ? "bg-brand-200 text-brand-800"
+                          : "bg-surface-raised text-ink-muted"
                     }`}
                   >
                     {done ? "✓" : i + 1}
@@ -127,8 +127,8 @@ export default function OrderStatusTracker({
                       active
                         ? "font-semibold"
                         : done
-                          ? "text-gray-700"
-                          : "text-gray-400"
+                          ? "text-ink-secondary"
+                          : "text-ink-faint"
                     }`}
                   >
                     {STATUS_LABELS[s]}
@@ -141,17 +141,17 @@ export default function OrderStatusTracker({
       </div>
 
       {tracking && (
-        <div className="rounded-xl border border-gray-200 p-4">
+        <div className="rounded-xl border border-surface-border p-4">
           {eta ? (
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-xs uppercase tracking-wide text-gray-500">
+                <p className="text-xs uppercase tracking-wide text-ink-muted">
                   Arriving in
                 </p>
                 <p className="text-2xl font-bold">
                   {formatEta(remaining ?? eta.etaSeconds)}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-ink-muted">
                   {formatDistance(eta.distanceMeters)} away · {eta.label}
                 </p>
               </div>
@@ -159,14 +159,14 @@ export default function OrderStatusTracker({
                 className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                   eta.trafficAware
                     ? "bg-green-100 text-green-800"
-                    : "bg-gray-100 text-gray-600"
+                    : "bg-surface-raised text-ink-secondary"
                 }`}
               >
                 {eta.trafficAware ? "Traffic-aware" : "Estimate"}
               </span>
             </div>
           ) : (
-            <p className="text-sm text-gray-600">Waiting for rider location…</p>
+            <p className="text-sm text-ink-secondary">Waiting for rider location…</p>
           )}
         </div>
       )}

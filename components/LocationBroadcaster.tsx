@@ -98,9 +98,9 @@ export default function LocationBroadcaster({
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 p-4">
+    <div className="rounded-xl border border-surface-border p-4">
       <h2 className="font-semibold">Share your location</h2>
-      <p className="mt-1 text-sm text-gray-600">
+      <p className="mt-1 text-sm text-ink-secondary">
         The customer sees your position and ETA live while you deliver.
       </p>
 
@@ -110,14 +110,14 @@ export default function LocationBroadcaster({
             <button
               type="button"
               onClick={startGps}
-              className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-orange-700"
+              className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-surface-deep hover:bg-brand-700"
             >
               Share real GPS
             </button>
             <button
               type="button"
               onClick={startSim}
-              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:border-orange-500"
+              className="rounded-md border border-surface-border px-3 py-1.5 text-sm hover:border-brand-500"
             >
               Simulate drive
             </button>
@@ -126,7 +126,7 @@ export default function LocationBroadcaster({
           <button
             type="button"
             onClick={stopAll}
-            className="rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:border-red-400 hover:text-red-600"
+            className="rounded-md border border-surface-border px-3 py-1.5 text-sm hover:border-red-400 hover:text-red-600"
           >
             Stop {mode === "gps" ? "sharing" : "simulation"}
           </button>
@@ -134,7 +134,7 @@ export default function LocationBroadcaster({
       </div>
 
       {pos && (
-        <p className="mt-3 text-xs text-gray-500">
+        <p className="mt-3 text-xs text-ink-muted">
           Broadcasting: {pos.lat.toFixed(4)}, {pos.lng.toFixed(4)}
           {mode === "sim" && " (simulated)"}
         </p>
