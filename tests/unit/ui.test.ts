@@ -10,7 +10,7 @@ describe("cn", () => {
 describe("buttonClasses", () => {
   it("includes the primary brand background by default", () => {
     const c = buttonClasses();
-    expect(c).toContain("bg-brand-600");
+    expect(c).toContain("bg-brand-500");
     expect(c).toContain("px-4"); // md size
   });
 
@@ -18,7 +18,7 @@ describe("buttonClasses", () => {
     const c = buttonClasses({ variant: "danger", size: "sm" });
     expect(c).toContain("bg-red-600");
     expect(c).toContain("px-3");
-    expect(c).not.toContain("bg-brand-600");
+    expect(c).not.toContain("bg-brand-500");
   });
 
   it("always includes disabled styling and rounded shape", () => {
