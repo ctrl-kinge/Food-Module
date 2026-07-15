@@ -32,10 +32,10 @@ export default function DashboardLive() {
   }, [router]);
 
   return (
-    <span className="flex items-center gap-1.5 text-xs text-gray-500">
+    <span className="flex items-center gap-1.5 text-xs text-ink-muted">
       <span
         className={`inline-block h-2 w-2 rounded-full ${
-          live ? "bg-green-500" : "bg-gray-300"
+          live ? "bg-green-500" : "bg-ink-faint"
         }`}
       />
       {live ? "Live" : "Connecting…"}

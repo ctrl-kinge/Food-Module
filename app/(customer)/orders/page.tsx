@@ -20,11 +20,11 @@ export default async function OrdersPage() {
       <h1 className="text-2xl font-bold">Your orders</h1>
 
       {orders.length === 0 ? (
-        <div className="mt-8 rounded-xl border border-gray-200 p-8 text-center">
-          <p className="text-gray-600">You haven&rsquo;t ordered anything yet.</p>
+        <div className="mt-8 rounded-xl border border-surface-border p-8 text-center">
+          <p className="text-ink-secondary">You haven&rsquo;t ordered anything yet.</p>
           <Link
             href="/restaurants"
-            className="mt-4 inline-block rounded-md bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700"
+            className="mt-4 inline-block rounded-md bg-brand-600 px-4 py-2 font-medium text-surface-deep hover:bg-brand-700"
           >
             Browse restaurants
           </Link>
@@ -35,12 +35,12 @@ export default async function OrdersPage() {
             <li key={o.id}>
               <Link
                 href={`/orders/${o.id}`}
-                className="block rounded-xl border border-gray-200 p-4 transition hover:border-brand-500 hover:shadow-sm"
+                className="block rounded-xl border border-surface-border p-4 transition hover:border-brand-500 hover:shadow-sm"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold">{o.restaurant.name}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-ink-muted">
                       #{o.id.slice(-6)} ·{" "}
                       {new Date(o.createdAt).toLocaleString("en-US")} ·{" "}
                       {o.items.length} item{o.items.length === 1 ? "" : "s"}

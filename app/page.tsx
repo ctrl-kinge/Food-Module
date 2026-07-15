@@ -38,7 +38,7 @@ export default function Home() {
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           Food<span className="text-brand-600">Delivery</span>
         </h1>
-        <p className="max-w-2xl text-lg text-gray-600">
+        <p className="max-w-2xl text-lg text-ink-secondary">
           Order from local restaurants and follow your rider on a live map.
           Riders get auto-assigned the nearest orders; restaurants manage their
           menu and watch sales roll in. Pick a role to jump in.
@@ -46,13 +46,13 @@ export default function Home() {
         <div className="flex flex-wrap gap-3 pt-2">
           <Link
             href="/restaurants"
-            className="rounded-md bg-brand-600 px-5 py-2.5 font-medium text-white transition hover:bg-brand-700"
+            className="rounded-md bg-brand-600 px-5 py-2.5 font-medium text-surface-deep transition hover:bg-brand-700"
           >
             Browse restaurants
           </Link>
           <Link
             href="/login"
-            className="rounded-md border border-gray-300 px-5 py-2.5 font-medium text-gray-900 transition hover:border-brand-500"
+            className="rounded-md border border-surface-border px-5 py-2.5 font-medium text-ink transition hover:border-brand-500"
           >
             Log in
           </Link>
@@ -72,20 +72,20 @@ export default function Home() {
               <h2 className="mt-1 text-lg font-semibold group-hover:text-brand-600">
                 {e.title}
               </h2>
-              <p className="mt-2 text-sm text-gray-600">{e.body}</p>
+              <p className="mt-2 text-sm text-ink-secondary">{e.body}</p>
             </Card>
           </Link>
         ))}
       </section>
 
-      <footer className="space-y-3 text-sm text-gray-600">
+      <footer className="space-y-3 text-sm text-ink-secondary">
         <p>
-          <span className="font-medium text-gray-800">Demo accounts</span>{" "}
+          <span className="font-medium text-ink">Demo accounts</span>{" "}
           (password{" "}
-          <code className="rounded bg-gray-100 px-1 py-0.5">password123</code>):{" "}
-          <span className="text-gray-700">customer@example.com</span> ·{" "}
-          <span className="text-gray-700">rider1@example.com</span> ·{" "}
-          <span className="text-gray-700">restaurant@example.com</span>
+          <code className="rounded bg-surface-raised px-1 py-0.5">password123</code>):{" "}
+          <span className="text-ink-secondary">customer@example.com</span> ·{" "}
+          <span className="text-ink-secondary">rider1@example.com</span> ·{" "}
+          <span className="text-ink-secondary">restaurant@example.com</span>
         </p>
         <div className="flex gap-4">
           <Link href="/login" className="text-brand-600 underline">
@@ -94,7 +94,7 @@ export default function Home() {
           <Link href="/register" className="text-brand-600 underline">
             Create account
           </Link>
-          <a href="/api/health" className="text-gray-500 underline">
+          <a href="/api/health" className="text-ink-muted underline">
             API health
           </a>
         </div>

@@ -8,11 +8,11 @@ export default function EmptyState({
   action?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-dashed border-gray-300 p-8 text-center">
+    <div className="rounded-xl border border-dashed border-surface-border p-8 text-center">
       <div className="text-3xl" aria-hidden>
         {icon}
       </div>
-      <p className="mt-2 text-sm text-gray-600">{message}</p>
+      <p className="mt-2 text-sm text-ink-secondary">{message}</p>
       {action && <div className="mt-4">{action}</div>}
     </div>
   );

@@ -91,7 +91,7 @@ export default function RiderAvailability({
             {online ? "Online" : "Offline"}
           </Badge>
         </p>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-ink-secondary">
           {cannotGoOffline
             ? "You have an active delivery — finish it before going offline."
             : "Go online to be auto-assigned nearby orders. We share your location only while you’re online."}

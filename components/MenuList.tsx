@@ -54,7 +54,7 @@ export default function MenuList({
 
   return (
     <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_320px]">
-      <ul className="divide-y divide-gray-200">
+      <ul className="divide-y divide-surface-border">
         {items.map((item) => {
           const qty = qtyOf(item.menuItemId);
           return (
@@ -65,21 +65,21 @@ export default function MenuList({
               <div>
                 <p className="font-medium">{item.name}</p>
                 {item.description && (
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <p className="text-sm text-ink-secondary">{item.description}</p>
                 )}
                 <p className="mt-1 text-sm font-medium">
                   {formatPrice(item.priceCents)}
                 </p>
               </div>
               {!isOpen ? (
-                <span className="text-sm text-gray-400">Closed</span>
+                <span className="text-sm text-ink-faint">Closed</span>
               ) : qty > 0 ? (
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     aria-label={`Remove one ${item.name}`}
                     onClick={() => cart.setQty(item.menuItemId, qty - 1)}
-                    className="h-8 w-8 rounded-md border border-gray-300 text-lg leading-none hover:border-orange-500"
+                    className="h-8 w-8 rounded-md border border-surface-border text-lg leading-none hover:border-brand-500"
                   >
                     −
                   </button>
@@ -88,7 +88,7 @@ export default function MenuList({
                     type="button"
                     aria-label={`Add one ${item.name}`}
                     onClick={() => cart.setQty(item.menuItemId, qty + 1)}
-                    className="h-8 w-8 rounded-md border border-gray-300 text-lg leading-none hover:border-orange-500"
+                    className="h-8 w-8 rounded-md border border-surface-border text-lg leading-none hover:border-brand-500"
                   >
                     +
                   </button>
@@ -97,7 +97,7 @@ export default function MenuList({
                 <button
                   type="button"
                   onClick={() => handleAdd(item)}
-                  className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-orange-700"
+                  className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-surface-deep hover:bg-brand-700"
                 >
                   Add
                 </button>
@@ -107,10 +107,10 @@ export default function MenuList({
         })}
       </ul>
 
-      <aside className="h-fit rounded-xl border border-gray-200 p-4 lg:sticky lg:top-6">
+      <aside className="h-fit rounded-xl border border-surface-border p-4 lg:sticky lg:top-6">
         <h2 className="font-semibold">Your cart</h2>
         {cartItems.length === 0 ? (
-          <p className="mt-2 text-sm text-gray-600">No items yet.</p>
+          <p className="mt-2 text-sm text-ink-secondary">No items yet.</p>
         ) : (
           <>
             <ul className="mt-3 space-y-2 text-sm">
@@ -123,13 +123,13 @@ export default function MenuList({
                 </li>
               ))}
             </ul>
-            <div className="mt-3 flex justify-between border-t border-gray-200 pt-3 font-medium">
+            <div className="mt-3 flex justify-between border-t border-surface-border pt-3 font-medium">
               <span>Subtotal</span>
               <span>{formatPrice(cartSubtotal(cartItems))}</span>
             </div>
             <Link
               href="/checkout"
-              className="mt-4 block rounded-md bg-orange-600 px-4 py-2 text-center font-medium text-white hover:bg-orange-700"
+              className="mt-4 block rounded-md bg-brand-600 px-4 py-2 text-center font-medium text-surface-deep hover:bg-brand-700"
             >
               Checkout ({cartCount(cartItems)})
             </Link>

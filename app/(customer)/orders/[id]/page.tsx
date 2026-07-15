@@ -31,7 +31,7 @@ export default async function OrderPage({
   return (
     <div className="mx-auto max-w-2xl px-6 py-8">
       <h1 className="text-2xl font-bold">Order confirmed</h1>
-      <p className="mt-1 text-sm text-gray-600">
+      <p className="mt-1 text-sm text-ink-secondary">
         From <span className="font-medium">{order.restaurant.name}</span> ·
         order #{order.id.slice(-6)}
       </p>
@@ -68,7 +68,7 @@ export default async function OrderPage({
 
       <Card className="mt-6">
         <h2 className="font-semibold">Items</h2>
-        <ul className="mt-3 divide-y divide-gray-100">
+        <ul className="mt-3 divide-y divide-surface-border">
           {order.items.map((i) => (
             <li key={i.id} className="flex justify-between py-2 text-sm">
               <span>
@@ -78,7 +78,7 @@ export default async function OrderPage({
             </li>
           ))}
         </ul>
-        <div className="mt-3 flex justify-between border-t border-gray-200 pt-3 font-semibold">
+        <div className="mt-3 flex justify-between border-t border-surface-border pt-3 font-semibold">
           <span>Subtotal</span>
           <span>{formatPrice(order.subtotalCents)}</span>
         </div>
@@ -86,8 +86,8 @@ export default async function OrderPage({
 
       <Card className="mt-6">
         <h2 className="font-semibold">Delivering to</h2>
-        <p className="mt-2 text-sm text-gray-700">{order.destAddress}</p>
-        <p className="text-xs text-gray-500">
+        <p className="mt-2 text-sm text-ink-secondary">{order.destAddress}</p>
+        <p className="text-xs text-ink-muted">
           {order.destLat.toFixed(4)}, {order.destLng.toFixed(4)}
         </p>
       </Card>

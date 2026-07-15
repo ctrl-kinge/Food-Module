@@ -2,7 +2,7 @@ import { useId } from "react";
 import { cn } from "@/lib/ui";
 
 const INPUT =
-  "block w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus-visible:border-brand-500";
+  "block w-full rounded-md border border-surface-border px-3 py-2 text-sm focus-visible:border-brand-500";
 
 export function Field({
   label,
@@ -17,7 +17,7 @@ export function Field({
   const errorId = error ? `${id}-error` : undefined;
   return (
     <div>
-      <label htmlFor={id} className="block text-sm font-medium text-gray-800">
+      <label htmlFor={id} className="block text-sm font-medium text-ink">
         {label}
       </label>
       <div className="mt-1">{children({ id, describedBy: errorId })}</div>

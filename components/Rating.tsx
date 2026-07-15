@@ -6,7 +6,7 @@ export default function Rating({
   count?: number;
 }) {
   if (!rating || rating <= 0) {
-    return <span className="text-sm text-gray-500">No ratings yet</span>;
+    return <span className="text-sm text-ink-muted">No ratings yet</span>;
   }
   return (
     <span className="inline-flex items-center gap-1 text-sm">
@@ -15,7 +15,7 @@ export default function Rating({
       </span>
       <span className="font-medium">{rating.toFixed(1)}</span>
       {typeof count === "number" && count > 0 && (
-        <span className="text-gray-500">({count})</span>
+        <span className="text-ink-muted">({count})</span>
       )}
     </span>
   );

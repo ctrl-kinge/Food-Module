@@ -31,7 +31,7 @@ export default function ClaimButton({ orderId }: { orderId: string }) {
         type="button"
         disabled={busy}
         onClick={claim}
-        className="rounded-md bg-orange-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-orange-700 disabled:opacity-60"
+        className="rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-surface-deep hover:bg-brand-700 disabled:opacity-60"
       >
         {busy ? "Claiming…" : "Claim delivery"}
       </button>

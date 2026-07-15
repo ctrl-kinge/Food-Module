@@ -81,13 +81,13 @@ export default function SavedAddresses({
         <ul className="flex flex-wrap gap-2">
           {items.map((a) => (
             <li key={a.id}>
-              <span className="inline-flex items-center gap-1 rounded-full border border-gray-300 px-3 py-1 text-sm">
+              <span className="inline-flex items-center gap-1 rounded-full border border-surface-border px-3 py-1 text-sm">
                 <button
                   type="button"
                   onClick={() =>
                     onSelect({ address: a.address, lat: a.lat, lng: a.lng })
                   }
-                  className="font-medium text-gray-800 hover:text-brand-600"
+                  className="font-medium text-ink hover:text-brand-600"
                 >
                   {a.label}
                 </button>
@@ -95,7 +95,7 @@ export default function SavedAddresses({
                   type="button"
                   aria-label={`Delete ${a.label}`}
                   onClick={() => remove(a.id)}
-                  className="text-gray-400 hover:text-red-600"
+                  className="text-ink-faint hover:text-red-600"
                 >
                   ×
                 </button>
@@ -105,7 +105,7 @@ export default function SavedAddresses({
         </ul>
       )}
       {activeSaved && (
-        <p className="mt-2 text-xs text-gray-600">
+        <p className="mt-2 text-xs text-ink-secondary">
           Delivering to saved address:{" "}
           <span className="font-medium">{activeSaved.label}</span>
         </p>

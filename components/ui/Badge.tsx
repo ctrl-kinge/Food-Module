@@ -3,7 +3,7 @@ import { cn } from "@/lib/ui";
 type Tone = "neutral" | "brand" | "success" | "warning" | "danger";
 
 const TONES: Record<Tone, string> = {
-  neutral: "bg-gray-100 text-gray-700",
+  neutral: "bg-surface-raised text-ink-secondary",
   brand: "bg-brand-100 text-brand-800",
   success: "bg-green-100 text-green-800",
   warning: "bg-amber-100 text-amber-800",

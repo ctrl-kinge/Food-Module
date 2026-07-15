@@ -50,22 +50,22 @@ export default async function AnalyticsPage() {
 
       <div className="mt-6 grid gap-3 sm:grid-cols-4">
         <Card>
-          <p className="text-xs text-gray-500">Orders</p>
+          <p className="text-xs text-ink-muted">Orders</p>
           <p className="text-xl font-bold">{s.totalOrders}</p>
         </Card>
         <Card>
-          <p className="text-xs text-gray-500">Revenue</p>
+          <p className="text-xs text-ink-muted">Revenue</p>
           <p className="text-xl font-bold">{formatPrice(s.totalRevenueCents)}</p>
         </Card>
         <Card>
-          <p className="text-xs text-gray-500">Avg order</p>
+          <p className="text-xs text-ink-muted">Avg order</p>
           <p className="text-xl font-bold">{formatPrice(s.avgOrderCents)}</p>
         </Card>
         <Card>
-          <p className="text-xs text-gray-500">Avg rating</p>
+          <p className="text-xs text-ink-muted">Avg rating</p>
           <p className="text-xl font-bold">
             {restaurant.avgRating ? restaurant.avgRating.toFixed(1) : "—"}
-            <span className="ml-1 text-xs font-normal text-gray-400">
+            <span className="ml-1 text-xs font-normal text-ink-faint">
               ({restaurant._count.reviews})
             </span>
           </p>
@@ -84,13 +84,13 @@ export default async function AnalyticsPage() {
       <Card className="mt-4">
         <h2 className="text-sm font-semibold">Top items</h2>
         {s.topItems.length === 0 ? (
-          <p className="mt-2 text-sm text-gray-600">No sales yet.</p>
+          <p className="mt-2 text-sm text-ink-secondary">No sales yet.</p>
         ) : (
           <ul className="mt-2 space-y-1">
             {s.topItems.map((it) => (
               <li
                 key={it.name}
-                className="flex justify-between text-sm text-gray-700"
+                className="flex justify-between text-sm text-ink-secondary"
               >
                 <span>{it.name}</span>
                 <span className="font-medium">{it.qty} sold</span>

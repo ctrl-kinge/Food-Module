@@ -26,7 +26,7 @@ export default function RestaurantCard({
   return (
     <Link
       href={`/restaurants/${id}`}
-      className="group block overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:border-brand-500 hover:shadow-md"
+      className="group block overflow-hidden rounded-xl border border-surface-border bg-surface shadow-sm transition hover:border-brand-500 hover:shadow-md"
     >
       <div className="relative flex h-32 items-center justify-center bg-gradient-to-br from-brand-100 to-amber-50 text-4xl">
         {imageUrl ? (
@@ -43,10 +43,10 @@ export default function RestaurantCard({
       </div>
       <div className="space-y-1 p-4">
         <h2 className="font-semibold group-hover:text-brand-600">{name}</h2>
-        <p className="text-sm text-gray-600">{address}</p>
+        <p className="text-sm text-ink-secondary">{address}</p>
         <div className="flex items-center justify-between pt-1">
           <Rating rating={avgRating} count={reviewCount} />
-          <span className="text-xs text-gray-500">{menuCount} items</span>
+          <span className="text-xs text-ink-muted">{menuCount} items</span>
         </div>
       </div>
     </Link>
